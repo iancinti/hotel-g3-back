@@ -2,7 +2,8 @@ package com.g3.hotel_g3_back.booking.application.port.in;
 
 import com.g3.hotel_g3_back.booking.domain.Booking;
 
-public interface RetriveBookingQuery {
-    Booking execute();
+import java.util.List;
 
+public interface RetriveBookingQuery {
+    List<Booking> execute();
 }

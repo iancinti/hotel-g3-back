@@ -5,6 +5,8 @@ import com.g3.hotel_g3_back.booking.application.port.out.RetriveBookingRepositor
 import com.g3.hotel_g3_back.booking.domain.Booking;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class RetriveBookingUseCase implements RetriveBookingQuery {
 
@@ -15,7 +17,7 @@ public class RetriveBookingUseCase implements RetriveBookingQuery {
     }
 
     @Override
-    public Booking execute() {
+    public List<Booking> execute() {
         return retriveBookingRepository.execute();
     }
 }

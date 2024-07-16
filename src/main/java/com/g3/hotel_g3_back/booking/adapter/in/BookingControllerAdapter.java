@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/booking")
 public class BookingControllerAdapter {
@@ -22,10 +24,10 @@ public class BookingControllerAdapter {
     }
 
     @GetMapping()
-    public ResponseEntity<Booking> getBooking() {
-        log.info("Se recibió una solicitud para obtener la reserva");
-        Booking response = retriveBookingQuery.execute();
-        log.info("Respondiendo con la reserva");
+    public ResponseEntity<List<Booking>> getBookings() {
+        log.info("Se recibió una solicitud para obtener las reservas");
+        List<Booking> response = retriveBookingQuery.execute();
+        log.info("Respondiendo con las reservas");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
