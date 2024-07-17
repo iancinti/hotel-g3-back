@@ -10,9 +10,9 @@ public class CustomerByIdJdbcAdapter implements RetriveCustomerByIdRepository {
     @Override
     public Customer execute(String id) {
         if ("1".equals(id)) {
-            return new Customer(1, "Juan Perez");
+            return new Customer("1", "Juan Perez");
         } else if ("2".equals(id)) {
-            return new Customer(2, "Maria Gomez");
+            return new Customer("2", "Maria Gomez");
         }
         return null;
     }

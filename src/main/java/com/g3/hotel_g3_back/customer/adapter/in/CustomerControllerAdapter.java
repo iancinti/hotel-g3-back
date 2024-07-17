@@ -3,6 +3,7 @@ package com.g3.hotel_g3_back.customer.adapter.in;
 import com.g3.hotel_g3_back.customer.application.port.in.CreateCustomerCommand;
 import com.g3.hotel_g3_back.customer.application.port.in.RetriveCustomerByIdQuery;
 import com.g3.hotel_g3_back.customer.application.port.in.RetriveCustomerQuery;
+import com.g3.hotel_g3_back.customer.application.port.in.UpdateCustomerCommand;
 import com.g3.hotel_g3_back.customer.domain.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,14 @@ public class CustomerControllerAdapter {
     private final RetriveCustomerQuery retriveCustomerQuery;
     private final RetriveCustomerByIdQuery retriveCustomerByIdQuery;
     private final CreateCustomerCommand createCustomerCommand;
+    private final UpdateCustomerCommand updateCustomerCommand;
 
-    public CustomerControllerAdapter(RetriveCustomerQuery retriveCustomerQuery, RetriveCustomerByIdQuery retriveCustomerByIdQuery, CreateCustomerCommand createCustomerCommand) {
+    public CustomerControllerAdapter(RetriveCustomerQuery retriveCustomerQuery, RetriveCustomerByIdQuery retriveCustomerByIdQuery,
+                                     CreateCustomerCommand createCustomerCommand, UpdateCustomerCommand updateCustomerCommand) {
         this.retriveCustomerQuery = retriveCustomerQuery;
         this.retriveCustomerByIdQuery = retriveCustomerByIdQuery;
         this.createCustomerCommand = createCustomerCommand;
+        this.updateCustomerCommand = updateCustomerCommand;
     }
 
     @GetMapping()
@@ -50,6 +54,14 @@ public class CustomerControllerAdapter {
         createCustomerCommand.execute(customer);
         log.info("Cliente creado exitosamente");
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateCustomer(@PathVariable String id, @RequestBody Customer customer) {
+        log.info("Se recibió una solicitud para actualizar el cliente con ID: " + id);
+        updateCustomerCommand.execute(id, customer);
+        log.info("Cliente actualizado exitosamente");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

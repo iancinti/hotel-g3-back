@@ -11,7 +11,7 @@ public class RetriveCustomerJdbcAdapter implements RetriveCustomerRepository {
 
     @Override
     public List<Customer> execute() {
-        return List.of(new Customer(1, "Ian Cinti"),
-                new Customer(2, "Cinti Ian"));
+        return List.of(new Customer("1", "Ian Cinti"),
+                new Customer("2", "Cinti Ian"));
     }
 }
