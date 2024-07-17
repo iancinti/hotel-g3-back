@@ -13,8 +13,8 @@ public class RetriveBookingJdbcAdapter implements RetriveBookingRepository {
     @Override
     public List<Booking> execute() {
         return Arrays.asList(
-                new Booking("", "Ian Cinti", "2024-07-14"),
-                new Booking("", "Juan Perez", "2024-07-15")
+                new Booking("1", "Ian Cinti", "2024-07-14"),
+                new Booking("2", "Juan Perez", "2024-07-15")
         );
     }
 }

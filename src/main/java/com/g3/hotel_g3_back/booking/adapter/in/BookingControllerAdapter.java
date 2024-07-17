@@ -1,9 +1,6 @@
 package com.g3.hotel_g3_back.booking.adapter.in;
 
-import com.g3.hotel_g3_back.booking.application.port.in.CreateBookingCommand;
-import com.g3.hotel_g3_back.booking.application.port.in.RetriveBookingByIdQuery;
-import com.g3.hotel_g3_back.booking.application.port.in.RetriveBookingQuery;
-import com.g3.hotel_g3_back.booking.application.port.in.UpdateBookingCommand;
+import com.g3.hotel_g3_back.booking.application.port.in.*;
 import com.g3.hotel_g3_back.booking.domain.Booking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +20,15 @@ public class BookingControllerAdapter {
     private final RetriveBookingByIdQuery retriveBookingByIdQuery;
     private final CreateBookingCommand createBookingCommand;
     private final UpdateBookingCommand updateBookingCommand;
+    private final DeleteBookingCommand deleteBookingCommand;
 
-    public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery, CreateBookingCommand createBookingCommand, UpdateBookingCommand updateBookingCommand) {
+    public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery,
+        CreateBookingCommand createBookingCommand, UpdateBookingCommand updateBookingCommand, DeleteBookingCommand deleteBookingCommand) {
         this.retriveBookingQuery = retriveBookingQuery;
         this.retriveBookingByIdQuery = retriveBookingByIdQuery;
         this.createBookingCommand = createBookingCommand;
         this.updateBookingCommand = updateBookingCommand;
+        this.deleteBookingCommand = deleteBookingCommand;
     }
 
     @GetMapping()
@@ -60,6 +60,14 @@ public class BookingControllerAdapter {
         log.info("Se recibió una solicitud para actualizar la reserva con ID: " + id);
         updateBookingCommand.execute(id, booking);
         log.info("Reserva actualizada exitosamente");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}/delete")
+    public ResponseEntity<Void> softDeleteBooking(@PathVariable String id) {
+        log.info("Se recibió una solicitud para eliminar lógicamente la reserva con ID: " + id);
+        deleteBookingCommand.execute(id);
+        log.info("Reserva eliminada lógicamente exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
