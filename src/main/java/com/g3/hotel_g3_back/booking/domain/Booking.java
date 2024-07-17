@@ -1,21 +1,21 @@
 package com.g3.hotel_g3_back.booking.domain;
 
 public class Booking {
-    private Integer id;
+    private String id;
     private String name;
     private String date;
 
-    public Booking(Integer id, String name, String date) {
+    public Booking(String id, String name, String date) {
         this.id = id;
         this.name = name;
         this.date = date;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

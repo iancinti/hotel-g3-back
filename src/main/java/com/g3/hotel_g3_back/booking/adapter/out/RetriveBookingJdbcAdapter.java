@@ -8,13 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 
 @Repository
-public class MockBookingAdapter implements RetriveBookingRepository {
+public class RetriveBookingJdbcAdapter implements RetriveBookingRepository {
 
     @Override
     public List<Booking> execute() {
         return Arrays.asList(
-                new Booking(1, "Ian Cinti", "2024-07-14"),
-                new Booking(2, "Mock", "2024-07-16")
+                new Booking("", "Ian Cinti", "2024-07-14"),
+                new Booking("", "Juan Perez", "2024-07-15")
         );
     }
 }
