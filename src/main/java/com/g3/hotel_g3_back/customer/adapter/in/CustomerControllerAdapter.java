@@ -1,5 +1,6 @@
 package com.g3.hotel_g3_back.customer.adapter.in;
 
+import com.g3.hotel_g3_back.customer.application.port.in.CreateCustomerCommand;
 import com.g3.hotel_g3_back.customer.application.port.in.RetriveCustomerByIdQuery;
 import com.g3.hotel_g3_back.customer.application.port.in.RetriveCustomerQuery;
 import com.g3.hotel_g3_back.customer.domain.Customer;
@@ -7,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,10 +20,12 @@ public class CustomerControllerAdapter {
 
     private final RetriveCustomerQuery retriveCustomerQuery;
     private final RetriveCustomerByIdQuery retriveCustomerByIdQuery;
+    private final CreateCustomerCommand createCustomerCommand;
 
-    public CustomerControllerAdapter(RetriveCustomerQuery retriveCustomerQuery, RetriveCustomerByIdQuery retriveCustomerByIdQuery) {
+    public CustomerControllerAdapter(RetriveCustomerQuery retriveCustomerQuery, RetriveCustomerByIdQuery retriveCustomerByIdQuery, CreateCustomerCommand createCustomerCommand) {
         this.retriveCustomerQuery = retriveCustomerQuery;
         this.retriveCustomerByIdQuery = retriveCustomerByIdQuery;
+        this.createCustomerCommand = createCustomerCommand;
     }
 
     @GetMapping()
@@ -42,6 +42,14 @@ public class CustomerControllerAdapter {
         Customer response = retriveCustomerByIdQuery.execute(id);
         log.info("Respondiendo con el cliente");
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> createCustomer(@RequestBody Customer customer) {
+        log.info("Se recibió una solicitud para crear un nuevo cliente");
+        createCustomerCommand.execute(customer);
+        log.info("Cliente creado exitosamente");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
