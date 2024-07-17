@@ -1,9 +1,6 @@
 package com.g3.hotel_g3_back.customer.adapter.in;
 
-import com.g3.hotel_g3_back.customer.application.port.in.CreateCustomerCommand;
-import com.g3.hotel_g3_back.customer.application.port.in.RetriveCustomerByIdQuery;
-import com.g3.hotel_g3_back.customer.application.port.in.RetriveCustomerQuery;
-import com.g3.hotel_g3_back.customer.application.port.in.UpdateCustomerCommand;
+import com.g3.hotel_g3_back.customer.application.port.in.*;
 import com.g3.hotel_g3_back.customer.domain.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +20,15 @@ public class CustomerControllerAdapter {
     private final RetriveCustomerByIdQuery retriveCustomerByIdQuery;
     private final CreateCustomerCommand createCustomerCommand;
     private final UpdateCustomerCommand updateCustomerCommand;
+    private final DeleteCustomerCommand deleteCustomerCommand;
 
     public CustomerControllerAdapter(RetriveCustomerQuery retriveCustomerQuery, RetriveCustomerByIdQuery retriveCustomerByIdQuery,
-                                     CreateCustomerCommand createCustomerCommand, UpdateCustomerCommand updateCustomerCommand) {
+                                     CreateCustomerCommand createCustomerCommand, UpdateCustomerCommand updateCustomerCommand, DeleteCustomerCommand deleteCustomerCommand) {
         this.retriveCustomerQuery = retriveCustomerQuery;
         this.retriveCustomerByIdQuery = retriveCustomerByIdQuery;
         this.createCustomerCommand = createCustomerCommand;
         this.updateCustomerCommand = updateCustomerCommand;
+        this.deleteCustomerCommand = deleteCustomerCommand;
     }
 
     @GetMapping()
@@ -61,6 +60,14 @@ public class CustomerControllerAdapter {
         log.info("Se recibió una solicitud para actualizar el cliente con ID: " + id);
         updateCustomerCommand.execute(id, customer);
         log.info("Cliente actualizado exitosamente");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
+        log.info("Se recibió una solicitud para eliminar el cliente con ID: " + id);
+        deleteCustomerCommand.execute(id);
+        log.info("Cliente eliminado exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
