@@ -1,5 +1,6 @@
 package com.g3.hotel_g3_back.booking.adapter.in;
 
+import com.g3.hotel_g3_back.booking.application.port.in.CreateBookingCommand;
 import com.g3.hotel_g3_back.booking.application.port.in.RetriveBookingByIdQuery;
 import com.g3.hotel_g3_back.booking.application.port.in.RetriveBookingQuery;
 import com.g3.hotel_g3_back.booking.domain.Booking;
@@ -7,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,10 +20,12 @@ public class BookingControllerAdapter {
 
     private final RetriveBookingQuery retriveBookingQuery;
     private final RetriveBookingByIdQuery retriveBookingByIdQuery;
+    private final CreateBookingCommand createBookingCommand;
 
-    public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery) {
+    public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery, CreateBookingCommand createBookingCommand) {
         this.retriveBookingQuery = retriveBookingQuery;
         this.retriveBookingByIdQuery = retriveBookingByIdQuery;
+        this.createBookingCommand = createBookingCommand;
     }
 
     @GetMapping()
@@ -42,5 +42,13 @@ public class BookingControllerAdapter {
         Booking response = retriveBookingByIdQuery.execute(id);
         log.info("Respondiendo con la reserva");
         return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+
+    @PostMapping()
+    public ResponseEntity<Void> createBooking(@RequestBody Booking booking) {
+        log.info("Se recibió una solicitud para crear una nueva reserva");
+        createBookingCommand.execute(booking);
+        log.info("Reserva creada exitosamente");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
