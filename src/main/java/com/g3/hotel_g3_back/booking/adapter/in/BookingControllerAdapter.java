@@ -3,6 +3,7 @@ package com.g3.hotel_g3_back.booking.adapter.in;
 import com.g3.hotel_g3_back.booking.application.port.in.CreateBookingCommand;
 import com.g3.hotel_g3_back.booking.application.port.in.RetriveBookingByIdQuery;
 import com.g3.hotel_g3_back.booking.application.port.in.RetriveBookingQuery;
+import com.g3.hotel_g3_back.booking.application.port.in.UpdateBookingCommand;
 import com.g3.hotel_g3_back.booking.domain.Booking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,13 @@ public class BookingControllerAdapter {
     private final RetriveBookingQuery retriveBookingQuery;
     private final RetriveBookingByIdQuery retriveBookingByIdQuery;
     private final CreateBookingCommand createBookingCommand;
+    private final UpdateBookingCommand updateBookingCommand;
 
-    public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery, CreateBookingCommand createBookingCommand) {
+    public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery, CreateBookingCommand createBookingCommand, UpdateBookingCommand updateBookingCommand) {
         this.retriveBookingQuery = retriveBookingQuery;
         this.retriveBookingByIdQuery = retriveBookingByIdQuery;
         this.createBookingCommand = createBookingCommand;
+        this.updateBookingCommand = updateBookingCommand;
     }
 
     @GetMapping()
@@ -51,4 +54,13 @@ public class BookingControllerAdapter {
         log.info("Reserva creada exitosamente");
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateBooking(@PathVariable String id, @RequestBody Booking booking) {
+        log.info("Se recibió una solicitud para actualizar la reserva con ID: " + id);
+        updateBookingCommand.execute(id, booking);
+        log.info("Reserva actualizada exitosamente");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }
