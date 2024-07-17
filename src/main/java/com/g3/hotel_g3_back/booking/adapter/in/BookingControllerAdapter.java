@@ -63,7 +63,7 @@ public class BookingControllerAdapter {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Void> softDeleteBooking(@PathVariable String id) {
         log.info("Se recibió una solicitud para eliminar lógicamente la reserva con ID: " + id);
         deleteBookingCommand.execute(id);
