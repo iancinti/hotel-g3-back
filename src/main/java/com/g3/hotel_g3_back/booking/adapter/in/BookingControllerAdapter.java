@@ -45,7 +45,7 @@ public class BookingControllerAdapter {
         Booking response = retriveBookingByIdQuery.execute(id);
         log.info("Respondiendo con la reserva");
         return ResponseEntity.status(HttpStatus.OK).body(response);
-        }
+    }
 
     @PostMapping()
     public ResponseEntity<Void> createBooking(@RequestBody Booking booking) {
