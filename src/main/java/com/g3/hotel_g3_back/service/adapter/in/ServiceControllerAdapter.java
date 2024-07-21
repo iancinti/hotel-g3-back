@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("Services")
+@RequestMapping("/service")
 public class ServiceControllerAdapter {
     private final Logger log = LoggerFactory.getLogger(BookingControllerAdapter.class);
 
