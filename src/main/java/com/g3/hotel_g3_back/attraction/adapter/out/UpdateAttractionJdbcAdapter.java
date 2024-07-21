@@ -5,7 +5,9 @@ import com.g3.hotel_g3_back.attraction.application.port.out.UpdateAttractionRepo
 import com.g3.hotel_g3_back.attraction.domain.Attraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UpdateAttractionJdbcAdapter implements UpdateAttractionRepository {
 
     private final Logger log = LoggerFactory.getLogger(AttractionControllerAdapter.class);

@@ -2,11 +2,13 @@ package com.g3.hotel_g3_back.gallery.adapter.out;
 
 import com.g3.hotel_g3_back.gallery.application.port.out.RetrieveGalleryRepository;
 import com.g3.hotel_g3_back.gallery.domain.Gallery;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class RetrieveGalleryJdbcAdapter implements RetrieveGalleryRepository {
     @Override
     public List<Gallery> execute() {

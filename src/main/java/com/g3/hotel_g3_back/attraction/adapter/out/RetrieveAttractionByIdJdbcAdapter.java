@@ -2,7 +2,9 @@ package com.g3.hotel_g3_back.attraction.adapter.out;
 
 import com.g3.hotel_g3_back.attraction.application.port.out.RetrieveAttractionByIdRepository;
 import com.g3.hotel_g3_back.attraction.domain.Attraction;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RetrieveAttractionByIdJdbcAdapter implements RetrieveAttractionByIdRepository {
     @Override
     public Attraction execute(String id) {

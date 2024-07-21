@@ -2,10 +2,12 @@ package com.g3.hotel_g3_back.attraction.adapter.out;
 
 import com.g3.hotel_g3_back.attraction.application.port.out.RetrieveAttractionRepository;
 import com.g3.hotel_g3_back.attraction.domain.Attraction;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class RetrieveAttractionJdbcAdapter implements RetrieveAttractionRepository {
     @Override
     public List<Attraction> execute() {

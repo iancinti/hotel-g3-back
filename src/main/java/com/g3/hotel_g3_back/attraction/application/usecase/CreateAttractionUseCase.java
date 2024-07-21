@@ -3,7 +3,9 @@ package com.g3.hotel_g3_back.attraction.application.usecase;
 import com.g3.hotel_g3_back.attraction.application.port.in.CreateAttractionCommand;
 import com.g3.hotel_g3_back.attraction.application.port.out.CreateAttractionRepository;
 import com.g3.hotel_g3_back.attraction.domain.Attraction;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CreateAttractionUseCase implements CreateAttractionCommand {
 
     private final CreateAttractionRepository createAttractionRepository;
