@@ -14,7 +14,7 @@ public class DeleteBookingUseCase implements DeleteBookingCommand {
     }
 
     @Override
-    public void execute(String id) {
+    public void execute(Integer id) {
         deleteBookingRepository.execute(id);
     }
 }
