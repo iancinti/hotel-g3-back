@@ -67,10 +67,10 @@ public class AttractionControllerAdapter {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Void> softDeleteAttraction(@PathVariable String id) {
-        log.info("Se recibió una solicitud para eliminar lógicamente la atraccion con ID: " + id);
+    public ResponseEntity<Void> softDeleteAttraction(@PathVariable  int id) {
+        log.info("Se recibió una solicitud para eliminar  la atraccion con ID: " + id);
         deleteAttractionCommand.execute(id);
-        log.info("Atraccion eliminada lógicamente exitosamente");
+        log.info("Atraccion eliminada  exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
