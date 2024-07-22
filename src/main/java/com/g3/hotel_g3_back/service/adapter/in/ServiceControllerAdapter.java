@@ -41,7 +41,7 @@ public class ServiceControllerAdapter {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Service> getServiceById(@PathVariable String id){
+    public ResponseEntity<Service> getServiceById(@PathVariable Integer id){
         log.info("Solicitud servicio por id");
         Service response = retriveServiceByIdQuery.execute(id);
         log.info("Respondiendo al servicio por id");

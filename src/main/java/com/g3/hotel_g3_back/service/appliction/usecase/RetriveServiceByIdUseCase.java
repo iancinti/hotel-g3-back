@@ -15,7 +15,7 @@ public class RetriveServiceByIdUseCase implements RetriveServiceByIdQuery {
     }
 
     @Override
-    public Service execute (String id){
+    public Service execute (Integer id){
         return retiveServiceByIdQueryRepository.execute(id);
     }
 
