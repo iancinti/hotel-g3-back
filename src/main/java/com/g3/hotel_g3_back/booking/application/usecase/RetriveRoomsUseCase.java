@@ -15,7 +15,7 @@ public class RetriveRoomsUseCase implements RetriveRoomsQuery {
     }
 
     @Override
-    public List<Room> execute(int pageNumber, int pageSize, String type) {
-        return retriveRoomsRepository.execute(pageNumber, pageSize, type);
+    public List<Room> execute(int pageNumber, int pageSize, List<String> types) {
+        return retriveRoomsRepository.execute(pageNumber, pageSize, types);
     }
 }

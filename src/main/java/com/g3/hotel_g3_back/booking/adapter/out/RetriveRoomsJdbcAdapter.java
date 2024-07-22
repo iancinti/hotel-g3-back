@@ -20,7 +20,7 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
     }
 
     @Override
-    public List<Room> execute(int pageNumber, int pageSize, String type) {
+    public List<Room> execute(int pageNumber, int pageSize, List<String> types) {
         pageNumber = Math.max(1, pageNumber);
         pageSize = Math.max(1, pageSize);
 
@@ -33,9 +33,16 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
 
         List<Object> params = new ArrayList<>();
 
-        if (type != null && !type.isEmpty()) {
-            sql.append(" AND rt.name = ?");
-            params.add(type.toUpperCase());
+        if (types != null && !types.isEmpty()) {
+            sql.append(" AND rt.name IN (");
+            for (int i = 0; i < types.size(); i++) {
+                sql.append("?");
+                if (i < types.size() - 1) {
+                    sql.append(", ");
+                }
+                params.add(types.get(i).toUpperCase());
+            }
+            sql.append(")");
         }
 
         sql.append(" LIMIT ? OFFSET ?");
