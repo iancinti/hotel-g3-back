@@ -5,6 +5,5 @@ import com.g3.hotel_g3_back.booking.domain.Room;
 import java.util.List;
 
 public interface RetriveRoomsRepository {
-    List<Room> execute(int pageNumber, int pageSize, Integer numberPeople,
-                       Double minPrice, Double maxPrice, Integer type);
+    List<Room> execute(int pageNumber, int pageSize, String type);
 }

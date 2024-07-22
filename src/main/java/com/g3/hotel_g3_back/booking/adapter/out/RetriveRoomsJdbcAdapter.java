@@ -20,8 +20,7 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
     }
 
     @Override
-    public List<Room> execute(int pageNumber, int pageSize, Integer numberPeople, Double minPrice,
-                              Double maxPrice, Integer type) {
+    public List<Room> execute(int pageNumber, int pageSize, String type) {
         pageNumber = Math.max(1, pageNumber);
         pageSize = Math.max(1, pageSize);
 
@@ -34,24 +33,9 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
 
         List<Object> params = new ArrayList<>();
 
-        if (numberPeople != null) {
-            sql.append(" AND r.number_people = ?");
-            params.add(numberPeople);
-        }
-
-        if (minPrice != null) {
-            sql.append(" AND r.price >= ?");
-            params.add(minPrice);
-        }
-
-        if (maxPrice != null) {
-            sql.append(" AND r.price <= ?");
-            params.add(maxPrice);
-        }
-
-        if (type != null) {
-            sql.append(" AND r.id_room_type = ?");
-            params.add(type);
+        if (type != null && !type.isEmpty()) {
+            sql.append(" AND rt.name = ?");
+            params.add(type.toUpperCase());
         }
 
         sql.append(" LIMIT ? OFFSET ?");
@@ -60,6 +44,7 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
 
         return jdbcTemplate.query(sql.toString(), new RoomRowMapper(), params.toArray());
     }
+
     private static class RoomRowMapper implements RowMapper<Room> {
         public Room mapRow(ResultSet rs, int rowNum) throws SQLException {
             Room room = new Room();

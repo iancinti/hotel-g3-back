@@ -53,13 +53,9 @@ public class BookingControllerAdapter {
 
     @GetMapping("/rooms")
     public ResponseEntity<List<Room>> retriveAllRooms(@RequestParam int pageNumber,@RequestParam int pageSize,
-                                                      @RequestParam(required = false) Integer numberPeople,
-                                                      @RequestParam(required = false) Double minPrice,
-                                                      @RequestParam(required = false) Double maxPrice,
-                                                      @RequestParam(required = false) Integer type){
+                                                      @RequestParam(required = false) String type){
         log.info("Se recibio una solicitud para obtener habitaciones");
-        List<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, numberPeople, minPrice,
-                maxPrice, type);
+        List<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, type);
         log.info("Respondiendo con las Habitaciones");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
