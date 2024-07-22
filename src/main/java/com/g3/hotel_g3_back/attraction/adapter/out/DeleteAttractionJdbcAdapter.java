@@ -9,14 +9,18 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Component
 public class DeleteAttractionJdbcAdapter implements DeleteAttractionRepository {
 
     private final Logger log = LoggerFactory.getLogger(AttractionControllerAdapter.class);
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String DELETE_IMAGES_BY_ATTRACTION_SQL = "DELETE FROM Image WHERE id_attraction = ?";
-    private static final String DELETE_ATTRACTION_SQL = "DELETE FROM Attraction WHERE id_attraction = ?";
+    private static final String SOFT_DELETE_IMAGES_BY_ATTRACTION_SQL = "UPDATE image SET deleted_at = ? WHERE id_attraction = ?";
+    private static final String SOFT_DELETE_ATTRACTION_SQL = "UPDATE attraction SET deleted_at = ? WHERE id_attraction = ?";
+
     @Autowired
     public DeleteAttractionJdbcAdapter(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -24,24 +28,22 @@ public class DeleteAttractionJdbcAdapter implements DeleteAttractionRepository {
 
     @Override
     public void execute(Integer id) {
-        log.info("Atraccion eliminada con el ID: " + id);
-        try {
-            // Eliminar imágenes asociadas con la atracción
-            int imagesDeleted = jdbcTemplate.update(DELETE_IMAGES_BY_ATTRACTION_SQL, id);
-            log.info("Imágenes eliminadas: {}", imagesDeleted);
+        log.info("Intentando marcar como eliminada la atracción con ID: " + id);
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
-            // Eliminar atracción
-            int rowsAffected = jdbcTemplate.update(DELETE_ATTRACTION_SQL, id);
+        try {
+            int imagesUpdated = jdbcTemplate.update(SOFT_DELETE_IMAGES_BY_ATTRACTION_SQL, now, id);
+            log.info("Imágenes marcadas como eliminadas: {}", imagesUpdated);
+
+            int rowsAffected = jdbcTemplate.update(SOFT_DELETE_ATTRACTION_SQL, now, id);
             if (rowsAffected > 0) {
-                log.info("Atracción eliminada con éxito.");
+                log.info("Atracción marcada como eliminada con éxito.");
             } else {
-                log.info("No se encontró la atracción con ID: {}, no se eliminó nada.", id);
+                log.info("No se encontró la atracción con ID: {}, no se marcó nada.", id);
             }
         } catch (DataAccessException e) {
-            log.error("Error al eliminar la atracción y sus imágenes: {}", e.getMessage());
-            // La anotación @Transactional asegura que se haga rollback si ocurre una excepción
+            log.error("Error al marcar la atracción y sus imágenes como eliminadas: {}", e.getMessage());
             throw e;
         }
-
     }
 }
