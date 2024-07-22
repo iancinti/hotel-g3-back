@@ -15,7 +15,7 @@ public class UpdateBookingUseCase implements UpdateBookingCommand {
     }
 
     @Override
-    public void execute(String id, Booking booking) {
+    public void execute(Integer id, Booking booking) {
         updateBookingRepository.execute(id, booking);
     }
 }
