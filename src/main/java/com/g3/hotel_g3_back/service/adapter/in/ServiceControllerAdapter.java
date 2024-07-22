@@ -65,7 +65,7 @@ public class ServiceControllerAdapter {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteServiceCommand(@PathVariable String id, @RequestBody Service service){
+    public ResponseEntity<Void> deleteServiceCommand(@PathVariable Integer id, @RequestBody Service service){
         log.info("Solicitud para eliminar un servicio"+ id);
         deleteServiceCommand.execute(id, service);
         log.info("Se eliminio el servicio");
