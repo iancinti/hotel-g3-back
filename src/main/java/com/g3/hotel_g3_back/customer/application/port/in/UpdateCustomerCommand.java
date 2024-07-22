@@ -3,5 +3,5 @@ package com.g3.hotel_g3_back.customer.application.port.in;
 import com.g3.hotel_g3_back.customer.domain.Customer;
 
 public interface UpdateCustomerCommand {
-    void execute(String id, Customer customer);
+    void execute(Integer idCustomer, Customer customer);
 }
