@@ -5,12 +5,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+
 @Repository
 public class DeleteBookingJdbcAdapter implements DeleteBookingRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String DELETE_BOOKING_SQL = "DELETE FROM Booking WHERE id = ?";
+    private static final String MARK_AS_DELETED_SQL = "UPDATE Booking SET deleted_at = ? WHERE id = ?";
 
     public DeleteBookingJdbcAdapter(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -19,14 +21,15 @@ public class DeleteBookingJdbcAdapter implements DeleteBookingRepository {
     @Override
     public void execute(Integer id) {
         try {
-            int rowsAffected = jdbcTemplate.update(DELETE_BOOKING_SQL, id);
+            LocalDateTime now = LocalDateTime.now();
+            int rowsAffected = jdbcTemplate.update(MARK_AS_DELETED_SQL, now, id);
             if (rowsAffected > 0) {
-                System.out.println("Reserva eliminada con ID: " + id);
+                System.out.println("Reserva marcada como eliminada con ID: " + id + " a las " + now);
             } else {
                 System.out.println("No se encontró reserva con ID: " + id);
             }
         } catch (DataAccessException e) {
-            System.out.println("Error al eliminar reserva: " + e.getMessage());
+            System.out.println("Error al marcar reserva como eliminada: " + e.getMessage());
         }
     }
 }
