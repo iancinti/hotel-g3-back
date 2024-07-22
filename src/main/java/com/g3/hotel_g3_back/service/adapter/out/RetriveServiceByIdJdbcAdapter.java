@@ -22,7 +22,7 @@ public class RetriveServiceByIdJdbcAdapter implements RetiveServiceByIdQueryRepo
     }
 
     @Override
-    public Service execute(String id) {
+    public Service execute(Integer id) {
         try {
             return jdbcTemplate.queryForObject(SELECT_SERVICE_BY_ID_SQL, new ServiceRowMapper(), id);
         } catch (DataAccessException e) {
