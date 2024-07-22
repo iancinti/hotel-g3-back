@@ -15,7 +15,7 @@ public class DeleteGalleryUseCase implements DeleteGalleryCommand {
 
 
     @Override
-    public void execute(String id) {
-        deleteGalleryRepository.execute(id);
+    public void execute(Integer idImage) {
+        deleteGalleryRepository.execute(idImage);
     }
 }
