@@ -16,7 +16,7 @@ public class RetrieveAttractionByIdUseCase implements RetrieveAttractionByIdQuer
 
 
     @Override
-    public Attraction execute(String id) {
+    public Attraction execute(Integer id) {
         return retrieveAttractionByIdRepository.execute(id);
     }
 }
