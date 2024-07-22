@@ -15,7 +15,7 @@ public class RetriveBookingByIdUseCase implements RetriveBookingByIdQuery {
     }
 
     @Override
-    public Booking execute(String id) {
+    public Booking execute(Integer id) {
         return retriveBookingByIdRepository.execute(id);
     }
 }

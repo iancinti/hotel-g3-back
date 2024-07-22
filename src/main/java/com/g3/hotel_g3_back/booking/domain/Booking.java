@@ -1,37 +1,59 @@
 package com.g3.hotel_g3_back.booking.domain;
 
-public class Booking {
-    private String id;
-    private String name;
-    private String date;
+import java.sql.Date;
 
-    public Booking(String id, String name, String date) {
+public class Booking {
+    private int id;
+    private int idCustomer;
+    private int idPayment;
+    private Date checkInDate;
+    private Date checkOutDate;
+
+    public Booking(int id, int idCustomer, int idPayment, Date checkInDate, Date checkOutDate) {
         this.id = id;
-        this.name = name;
-        this.date = date;
+        this.idCustomer = idCustomer;
+        this.idPayment = idPayment;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getIdCustomer() {
+        return idCustomer;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdCustomer(int idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
-    public String getDate() {
-        return date;
+    public int getIdPayment() {
+        return idPayment;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setIdPayment(int idPayment) {
+        this.idPayment = idPayment;
+    }
+
+    public Date getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
     }
 }

@@ -40,7 +40,7 @@ public class BookingControllerAdapter {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable String id) {
+    public ResponseEntity<Booking> getBookingById(@PathVariable Integer id) {
         log.info("Se recibió una solicitud para obtener la reserva con ID: " + id);
         Booking response = retriveBookingByIdQuery.execute(id);
         log.info("Respondiendo con la reserva");
@@ -56,7 +56,7 @@ public class BookingControllerAdapter {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateBooking(@PathVariable String id, @RequestBody Booking booking) {
+    public ResponseEntity<Void> updateBooking(@PathVariable Integer id, @RequestBody Booking booking) {
         log.info("Se recibió una solicitud para actualizar la reserva con ID: " + id);
         updateBookingCommand.execute(id, booking);
         log.info("Reserva actualizada exitosamente");
@@ -64,7 +64,7 @@ public class BookingControllerAdapter {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Void> softDeleteBooking(@PathVariable String id) {
+    public ResponseEntity<Void> softDeleteBooking(@PathVariable Integer id) {
         log.info("Se recibió una solicitud para eliminar lógicamente la reserva con ID: " + id);
         deleteBookingCommand.execute(id);
         log.info("Reserva eliminada lógicamente exitosamente");
