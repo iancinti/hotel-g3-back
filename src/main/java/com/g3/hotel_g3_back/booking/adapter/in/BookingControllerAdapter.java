@@ -56,9 +56,10 @@ public class BookingControllerAdapter {
                                                       @RequestParam(required = false) Integer numberPeople,
                                                       @RequestParam(required = false) Double minPrice,
                                                       @RequestParam(required = false) Double maxPrice,
-                                                      @RequestParam(required = false) String name){
+                                                      @RequestParam(required = false) Integer type){
         log.info("Se recibio una solicitud para obtener habitaciones");
-        List<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, numberPeople, minPrice, maxPrice, name);
+        List<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, numberPeople, minPrice,
+                maxPrice, type);
         log.info("Respondiendo con las Habitaciones");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

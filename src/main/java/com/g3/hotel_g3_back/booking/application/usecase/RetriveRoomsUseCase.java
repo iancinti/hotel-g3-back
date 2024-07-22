@@ -16,7 +16,7 @@ public class RetriveRoomsUseCase implements RetriveRoomsQuery {
 
     @Override
     public List<Room> execute(int pageNumber, int pageSize, Integer numberPeople, Double minPrice,
-                              Double maxPrice, String name) {
-        return retriveRoomsRepository.execute(pageNumber, pageSize, numberPeople, minPrice, maxPrice, name);
+                              Double maxPrice, Integer type) {
+        return retriveRoomsRepository.execute(pageNumber, pageSize, numberPeople, minPrice, maxPrice, type);
     }
 }

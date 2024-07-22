@@ -3,7 +3,6 @@ package com.g3.hotel_g3_back.booking.domain;
 public class Room {
     private String name;
     private Double price;
-
     private Integer numberPeople;
     private String type;
 

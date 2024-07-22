@@ -20,7 +20,8 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
     }
 
     @Override
-    public List<Room> execute(int pageNumber, int pageSize, Integer numberPeople, Double minPrice, Double maxPrice, String name) {
+    public List<Room> execute(int pageNumber, int pageSize, Integer numberPeople, Double minPrice,
+                              Double maxPrice, Integer type) {
         pageNumber = Math.max(1, pageNumber);
         pageSize = Math.max(1, pageSize);
 
@@ -48,9 +49,9 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
             params.add(maxPrice);
         }
 
-        if (name != null && !name.isEmpty()) {
-            sql.append(" AND rt.name = ?");
-            params.add(name);
+        if (type != null) {
+            sql.append(" AND r.id_room_type = ?");
+            params.add(type);
         }
 
         sql.append(" LIMIT ? OFFSET ?");
