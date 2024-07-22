@@ -15,7 +15,7 @@ public class RetrieveGalleryByIdUseCase implements RetrieveGalleryByIdQuery {
     }
 
     @Override
-    public Gallery execute(String id) {
-        return retrieveGalleryByIdRepository.execute(id);
+    public Gallery execute(Integer idImage) {
+        return retrieveGalleryByIdRepository.execute(idImage);
     }
 }
