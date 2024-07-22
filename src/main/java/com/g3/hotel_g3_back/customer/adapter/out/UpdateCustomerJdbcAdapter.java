@@ -4,29 +4,55 @@ import com.g3.hotel_g3_back.customer.application.port.out.UpdateCustomerReposito
 import com.g3.hotel_g3_back.customer.domain.Customer;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-@Repository
+import javax.sql.DataSource;
+
+@Component
 public class UpdateCustomerJdbcAdapter implements UpdateCustomerRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final PlatformTransactionManager transactionManager;
 
-    private static final String UPDATE_CUSTOMER_SQL = "UPDATE customers SET name = ? WHERE id = ?";
+    private static final String UPDATE_CUSTOMER_SQL = "UPDATE Customer SET id_personal_data = ? WHERE id_customer = ?";
+    private static final String UPDATE_PERSONAL_DATA_SQL = "UPDATE Personal_data SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE id_personal_data = ?";
 
-    public UpdateCustomerJdbcAdapter(JdbcTemplate jdbcTemplate) {
+    public UpdateCustomerJdbcAdapter(JdbcTemplate jdbcTemplate, DataSource dataSource) {
         this.jdbcTemplate = jdbcTemplate;
+        this.transactionManager = new DataSourceTransactionManager(dataSource);
     }
 
     @Override
-    public void execute(String id, Customer customer) {
+    public void execute(Integer idCustomer, Customer customer) {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status = transactionManager.getTransaction(def);
+
         try {
             jdbcTemplate.update(
                     UPDATE_CUSTOMER_SQL,
-                    customer.getName(),
-                    id
+                    customer.getIdPersonalData(),
+                    idCustomer
             );
-            System.out.println("Cliente actualizado: ID=" + id + ", Nombre=" + customer.getName());
+
+            jdbcTemplate.update(
+                    UPDATE_PERSONAL_DATA_SQL,
+                    customer.getFirstName(),
+                    customer.getLastName(),
+                    customer.getEmail(),
+                    customer.getPhoneNumber(),
+                    customer.getIdPersonalData()
+            );
+
+            transactionManager.commit(status);
+            System.out.println("Cliente y datos personales actualizados exitosamente: ID Cliente=" + idCustomer);
         } catch (DataAccessException e) {
+            transactionManager.rollback(status);
             System.out.println("Error al actualizar cliente: " + e.getMessage());
         }
     }

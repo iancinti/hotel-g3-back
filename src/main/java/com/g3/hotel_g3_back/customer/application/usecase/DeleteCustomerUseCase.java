@@ -14,8 +14,8 @@ public class DeleteCustomerUseCase implements DeleteCustomerCommand {
     }
 
     @Override
-    public void execute(String id) {
-        deleteCustomerRepository.execute(id);
+    public void execute(Integer idCustomer) {
+        deleteCustomerRepository.execute(idCustomer);
     }
 }
 

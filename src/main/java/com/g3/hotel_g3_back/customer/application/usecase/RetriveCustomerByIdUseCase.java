@@ -15,7 +15,7 @@ public class RetriveCustomerByIdUseCase implements RetriveCustomerByIdQuery {
     }
 
     @Override
-    public Customer execute(String id) {
-        return retriveCustomerByIdRepository.execute(id);
+    public Customer execute(Integer idCustomer) {
+        return retriveCustomerByIdRepository.execute(idCustomer);
     }
 }

@@ -15,8 +15,8 @@ public class UpdateCustomerUseCase implements UpdateCustomerCommand {
     }
 
     @Override
-    public void execute(String id, Customer customer) {
-        updateCustomerRepository.execute(id, customer);
+    public void execute(Integer idCustomer, Customer customer) {
+        updateCustomerRepository.execute(idCustomer, customer);
     }
 }
 

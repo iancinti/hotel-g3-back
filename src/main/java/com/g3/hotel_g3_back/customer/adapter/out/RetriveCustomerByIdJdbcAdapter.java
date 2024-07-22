@@ -1,6 +1,6 @@
 package com.g3.hotel_g3_back.customer.adapter.out;
 
-import com.g3.hotel_g3_back.customer.application.port.out.RetriveCustomerRepository;
+import com.g3.hotel_g3_back.customer.application.port.out.RetriveCustomerByIdRepository;
 import com.g3.hotel_g3_back.customer.domain.Customer;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,28 +9,28 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 @Component
-public class RetriveCustomerJdbcAdapter implements RetriveCustomerRepository {
+public class RetriveCustomerByIdJdbcAdapter implements RetriveCustomerByIdRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_ALL_CUSTOMERS_SQL = "SELECT c.id_customer, c.id_personal_data, pd.first_name, pd.last_name, pd.email, pd.phone_number " +
+    private static final String SELECT_CUSTOMER_BY_ID_SQL = "SELECT c.id_customer, c.id_personal_data, pd.first_name, pd.last_name, pd.email, pd.phone_number " +
             "FROM Customer c " +
-            "JOIN Personal_Data pd ON c.id_personal_data = pd.id_personal_data";
+            "JOIN Personal_Data pd ON c.id_personal_data = pd.id_personal_data " +
+            "WHERE c.id_customer = ?";
 
-    public RetriveCustomerJdbcAdapter(JdbcTemplate jdbcTemplate) {
+    public RetriveCustomerByIdJdbcAdapter(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public List<Customer> execute() {
+    public Customer execute(Integer idCustomer) {
         try {
-            return jdbcTemplate.query(SELECT_ALL_CUSTOMERS_SQL, new CustomerRowMapper());
+            return jdbcTemplate.queryForObject(SELECT_CUSTOMER_BY_ID_SQL, new Object[]{idCustomer}, new CustomerRowMapper());
         } catch (EmptyResultDataAccessException e) {
-            System.out.println("No se encontraron clientes.");
-            return List.of();
+            System.out.println("No se encontró cliente con ID: " + idCustomer);
+            return null;
         }
     }
 

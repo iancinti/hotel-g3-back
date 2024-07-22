@@ -39,10 +39,10 @@ public class CustomerControllerAdapter {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
-        log.info("Se recibió una solicitud para obtener el cliente con ID: " + id);
-        Customer response = retriveCustomerByIdQuery.execute(id);
+    @GetMapping("/{idCustomer}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Integer idCustomer) {
+        log.info("Se recibió una solicitud para obtener el cliente con ID: " + idCustomer);
+        Customer response = retriveCustomerByIdQuery.execute(idCustomer);
         log.info("Respondiendo con el cliente");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -55,18 +55,18 @@ public class CustomerControllerAdapter {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateCustomer(@PathVariable String id, @RequestBody Customer customer) {
-        log.info("Se recibió una solicitud para actualizar el cliente con ID: " + id);
-        updateCustomerCommand.execute(id, customer);
+    @PutMapping("/{idCustomer}")
+    public ResponseEntity<Void> updateCustomer(@PathVariable Integer idCustomer, @RequestBody Customer customer) {
+        log.info("Se recibió una solicitud para actualizar el cliente con ID: " + idCustomer);
+        updateCustomerCommand.execute(idCustomer, customer);
         log.info("Cliente actualizado exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
-        log.info("Se recibió una solicitud para eliminar el cliente con ID: " + id);
-        deleteCustomerCommand.execute(id);
+    @DeleteMapping("/{idCustomer}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Integer idCustomer) {
+        log.info("Se recibió una solicitud para eliminar el cliente con ID: " + idCustomer);
+        deleteCustomerCommand.execute(idCustomer);
         log.info("Cliente eliminado exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
