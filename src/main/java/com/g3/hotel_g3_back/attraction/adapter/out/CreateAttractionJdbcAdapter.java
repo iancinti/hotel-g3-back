@@ -1,6 +1,5 @@
 package com.g3.hotel_g3_back.attraction.adapter.out;
 
-import com.g3.hotel_g3_back.attraction.adapter.in.AttractionControllerAdapter;
 import com.g3.hotel_g3_back.attraction.application.port.out.CreateAttractionRepository;
 import com.g3.hotel_g3_back.attraction.domain.Attraction;
 import org.slf4j.Logger;
@@ -13,15 +12,16 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 
 @Component
 public class CreateAttractionJdbcAdapter implements CreateAttractionRepository {
 
-    private final Logger log = LoggerFactory.getLogger(AttractionControllerAdapter.class);
+    private final Logger log = LoggerFactory.getLogger(CreateAttractionJdbcAdapter.class);
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String INSERT_ATTRACTION_SQL = "INSERT INTO Attraction (name, description) VALUES (?, ?)";
-    private static final String INSERT_IMAGE_SQL = "INSERT INTO Image (id_room, url_image, id_attraction) VALUES (?, ?, ?)";
+    private static final String INSERT_ATTRACTION_SQL = "INSERT INTO attraction (name, description) VALUES (?, ?)";
+    private static final String INSERT_IMAGE_SQL = "INSERT INTO image (id_room, url_image, id_attraction) VALUES (?, ?, ?)";
 
     @Autowired
     public CreateAttractionJdbcAdapter(JdbcTemplate jdbcTemplate) {
@@ -35,8 +35,8 @@ public class CreateAttractionJdbcAdapter implements CreateAttractionRepository {
         try {
             jdbcTemplate.update(
                     connection -> {
-                        PreparedStatement ps = connection.prepareStatement(INSERT_ATTRACTION_SQL, new String[] { "id_attraction" });
-                        ps.setString(1, attraction.getTitle());
+                        PreparedStatement ps = connection.prepareStatement(INSERT_ATTRACTION_SQL, Statement.RETURN_GENERATED_KEYS);
+                        ps.setString(1, attraction.getName());
                         ps.setString(2, attraction.getDescription());
                         return ps;
                     },
@@ -46,8 +46,14 @@ public class CreateAttractionJdbcAdapter implements CreateAttractionRepository {
             Number attractionId = keyHolder.getKey();
             log.info("Atracción creada con ID: {}", attractionId);
 
-            jdbcTemplate.update(INSERT_IMAGE_SQL, 1, attraction.getUrlImage(), attractionId);
-            log.info("Imagen asociada a la atracción creada.");
+            Integer idRoom = 1;
+
+            if (attraction.getUrlImage() != null && idRoom != null) {
+                jdbcTemplate.update(INSERT_IMAGE_SQL, idRoom, attraction.getUrlImage(), attractionId);
+                log.info("Imagen asociada a la atracción creada.");
+            } else {
+                log.warn("URL de imagen es nula o idRoom es inválido, no se insertará en la tabla de imágenes.");
+            }
         } catch (DataAccessException e) {
             log.error("Error al crear atracción: {}", e.getMessage());
             log.error("Error al crear atracción: {}", e.getCause().getMessage());
