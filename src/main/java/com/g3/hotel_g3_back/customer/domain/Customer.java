@@ -1,27 +1,67 @@
 package com.g3.hotel_g3_back.customer.domain;
 
 public class Customer {
-    private String id;
-    private String name;
+    private Integer idCustomer;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private Integer idPersonalData;
 
-    public Customer(String id, String name) {
-        this.id = id;
-        this.name = name;
+    public Customer(Integer idCustomer, Integer idPersonalData, String firstName, String lastName, String email, String phoneNumber) {
+        this.idCustomer = idCustomer;
+        this.idPersonalData = idPersonalData;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getId() {
-        return id;
+    public Integer getIdCustomer() {
+        return idCustomer;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdCustomer(Integer idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
-    public String getName() {
-        return name;
+    public Integer getIdPersonalData() {
+        return idPersonalData;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdPersonalData(Integer idPersonalData) {
+        this.idPersonalData = idPersonalData;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
