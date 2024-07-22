@@ -2,6 +2,7 @@ package com.g3.hotel_g3_back.booking.adapter.in;
 
 import com.g3.hotel_g3_back.booking.application.port.in.*;
 import com.g3.hotel_g3_back.booking.domain.Booking;
+import com.g3.hotel_g3_back.booking.domain.Room;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,14 +19,17 @@ public class BookingControllerAdapter {
 
     private final RetriveBookingQuery retriveBookingQuery;
     private final RetriveBookingByIdQuery retriveBookingByIdQuery;
+    private final RetriveRoomsQuery retriveRoomsQuery;
     private final CreateBookingCommand createBookingCommand;
     private final UpdateBookingCommand updateBookingCommand;
     private final DeleteBookingCommand deleteBookingCommand;
 
+
     public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery,
-        CreateBookingCommand createBookingCommand, UpdateBookingCommand updateBookingCommand, DeleteBookingCommand deleteBookingCommand) {
+                                    RetriveRoomsQuery retriveRoomsQuery, CreateBookingCommand createBookingCommand, UpdateBookingCommand updateBookingCommand, DeleteBookingCommand deleteBookingCommand) {
         this.retriveBookingQuery = retriveBookingQuery;
         this.retriveBookingByIdQuery = retriveBookingByIdQuery;
+        this.retriveRoomsQuery = retriveRoomsQuery;
         this.createBookingCommand = createBookingCommand;
         this.updateBookingCommand = updateBookingCommand;
         this.deleteBookingCommand = deleteBookingCommand;
@@ -44,6 +48,14 @@ public class BookingControllerAdapter {
         log.info("Se recibió una solicitud para obtener la reserva con ID: " + id);
         Booking response = retriveBookingByIdQuery.execute(id);
         log.info("Respondiendo con la reserva");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/rooms")
+    public ResponseEntity<List<Room>> retriveAllRooms(@RequestParam int pageNumber,@RequestParam int pageSize){
+        log.info("Se recibio una solicitud para obtener habitaciones");
+        List<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize);
+        log.info("Respondiendo con las Habitaciones");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

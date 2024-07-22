@@ -14,7 +14,7 @@ public class DeleteAttractionUseCase implements DeleteAttractionCommand {
     }
 
     @Override
-    public void execute(String id) {
+    public void execute(int id) {
         deleteAttractionRepository.execute(id);
     }
 }

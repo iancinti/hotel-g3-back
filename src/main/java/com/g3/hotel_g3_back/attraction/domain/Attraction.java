@@ -2,9 +2,10 @@ package com.g3.hotel_g3_back.attraction.domain;
 
 public class Attraction {
 
-    private Integer id;
+    private int id;
     private String title;
     private String description;
+    private String urlImage;
 
     public Attraction(Integer id, String title, String description){
         this.id = id;
@@ -12,7 +13,7 @@ public class Attraction {
         this.description = description;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -30,5 +31,17 @@ public class Attraction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }
