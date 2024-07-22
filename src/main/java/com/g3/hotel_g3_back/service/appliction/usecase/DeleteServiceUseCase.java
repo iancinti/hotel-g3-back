@@ -15,7 +15,7 @@ public class DeleteServiceUseCase implements DeleteServiceCommand {
     }
 
     @Override
-    public void execute(String id, Service service) {
+    public void execute(Integer id, Service service) {
         deleteServiceRepository.execute(id,service);
     }
 
