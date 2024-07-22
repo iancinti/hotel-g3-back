@@ -14,9 +14,8 @@ public class UpdateAttractionUseCase implements UpdateAttractionCommand {
         this.updateAttractionRepository = updateAttractionRepository;
     }
 
-
     @Override
-    public void execute(String id, Attraction attraction) {
+    public void execute(Integer id, Attraction attraction) {
         updateAttractionRepository.execute(id, attraction);
     }
 }
