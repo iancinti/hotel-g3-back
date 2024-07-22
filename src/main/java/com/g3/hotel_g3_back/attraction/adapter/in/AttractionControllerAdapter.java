@@ -43,7 +43,7 @@ public class AttractionControllerAdapter {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Attraction> getAttractionById(@PathVariable String id) {
+    public ResponseEntity<Attraction> getAttractionById(@PathVariable Integer id) {
         log.info("Se recibió una solicitud para obtener la atraccion con ID: " + id);
         Attraction response = retrieveAttractionByIdQuery.execute(id);
         log.info("Respondiendo con la atraccion");
@@ -59,15 +59,15 @@ public class AttractionControllerAdapter {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateAttraction(@PathVariable String id, @RequestBody Attraction attraction) {
+    public ResponseEntity<Void> updateAttraction(@PathVariable Integer id, @RequestBody Attraction attraction) {
         log.info("Se recibió una solicitud para actualizar la atraccion con ID: " + id);
         updateAttractionCommand.execute(id, attraction);
-        log.info("Reserva actualizada exitosamente");
+        log.info("Atraccion actualizada exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/{id}/delete")
-    public ResponseEntity<Void> softDeleteAttraction(@PathVariable  int id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> softDeleteAttraction(@PathVariable  Integer id) {
         log.info("Se recibió una solicitud para eliminar  la atraccion con ID: " + id);
         deleteAttractionCommand.execute(id);
         log.info("Atraccion eliminada  exitosamente");

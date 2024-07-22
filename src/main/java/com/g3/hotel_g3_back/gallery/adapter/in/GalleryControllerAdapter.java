@@ -40,10 +40,10 @@ public class GalleryControllerAdapter {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Gallery> getGalleryImageById(@PathVariable String id){
-        log.info("Se recibe una solicitud para mostrar la galeria con ID: " + id);
-        Gallery response = retrieveGalleryByIdQuery.execute(id);
+    @GetMapping("/{idImage}")
+    public ResponseEntity<Gallery> getGalleryImageById(@PathVariable Integer idImage){
+        log.info("Se recibe una solicitud para mostrar la galeria con ID: " + idImage);
+        Gallery response = retrieveGalleryByIdQuery.execute(idImage);
         log.info("Se responde con la galeria");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -52,22 +52,22 @@ public class GalleryControllerAdapter {
     public ResponseEntity<Void> createGallery(@RequestBody Gallery gallery){
         log.info("Se recibe solicitud para crear una galeria");
         createGalleryCommand.execute(gallery);
-        log.info("Reserva creada correctamente");
+        log.info("Galery creada correctamente");
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateGallery(@PathVariable String id, @RequestBody Gallery gallery){
-        log.info("Se recibe solicitud para actualizar la galeria con ID: " + id);
-        updateGalleryCommand.execute(id, gallery);
+    @PutMapping("/{idImage}")
+    public ResponseEntity<Void> updateGallery(@PathVariable Integer idImage, @RequestBody Gallery gallery){
+        log.info("Se recibe solicitud para actualizar la galeria con ID: " + idImage);
+        updateGalleryCommand.execute(idImage, gallery);
         log.info("Galeria actualizada correctamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGallery(@PathVariable String id){
-        log.info("Se recibe solicitud para eliminar la galeria con ID: " + id);
-        deleteGalleryCommand.execute(id);
+    @DeleteMapping("/{idImage}")
+    public ResponseEntity<Void> deleteGallery(@PathVariable Integer idImage){
+        log.info("Se recibe solicitud para eliminar la galeria con ID: " + idImage);
+        deleteGalleryCommand.execute(idImage);
         log.info("Galeria eliminada exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
