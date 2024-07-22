@@ -5,29 +5,32 @@ import com.g3.hotel_g3_back.customer.domain.Customer;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository
+@Component
 public class RetriveCustomerByIdJdbcAdapter implements RetriveCustomerByIdRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_CUSTOMER_BY_ID_SQL = "SELECT id_customer, id_personal_data FROM Customer WHERE id_customer = ?";
+    private static final String SELECT_CUSTOMER_BY_ID_SQL = "SELECT c.id_customer, c.id_personal_data, pd.first_name, pd.last_name, pd.email, pd.phone_number " +
+            "FROM Customer c " +
+            "JOIN Personal_Data pd ON c.id_personal_data = pd.id_personal_data " +
+            "WHERE c.id_customer = ?";
 
     public RetriveCustomerByIdJdbcAdapter(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public Customer execute(Integer id_customer) {
+    public Customer execute(Integer idCustomer) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_CUSTOMER_BY_ID_SQL, new Object[]{id_customer}, new CustomerRowMapper());
+            return jdbcTemplate.queryForObject(SELECT_CUSTOMER_BY_ID_SQL, new Object[]{idCustomer}, new CustomerRowMapper());
         } catch (EmptyResultDataAccessException e) {
-            System.out.println("No se encontró cliente con ID: " + id_customer);
-            return null; // Retorna null si no se encuentra el cliente
+            System.out.println("No se encontró cliente con ID: " + idCustomer);
+            return null;
         }
     }
 
@@ -36,8 +39,14 @@ public class RetriveCustomerByIdJdbcAdapter implements RetriveCustomerByIdReposi
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
             Integer idCustomer = rs.getInt("id_customer");
             Integer idPersonalData = rs.getInt("id_personal_data");
-            return new Customer(idCustomer, idPersonalData);
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+            String email = rs.getString("email");
+            String phoneNumber = rs.getString("phone_number");
+
+            return new Customer(idCustomer, idPersonalData, firstName, lastName, email, phoneNumber);
         }
     }
 }
+
 
