@@ -15,7 +15,7 @@ public class UpdateGalleryUseCase implements UpdateGalleryCommand {
     }
 
     @Override
-    public void execute(String id, Gallery gallery) {
-        updateGalleryRepository.execute(id, gallery);
+    public void execute(Integer idImage, Gallery gallery) {
+        updateGalleryRepository.execute(idImage, gallery);
     }
 }
