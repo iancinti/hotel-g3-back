@@ -1,4 +1,4 @@
-package com.g3.hotel_g3_back.config;
+package com.g3.hotel_g3_back.share.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

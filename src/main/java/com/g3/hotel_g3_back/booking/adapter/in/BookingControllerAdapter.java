@@ -3,6 +3,7 @@ package com.g3.hotel_g3_back.booking.adapter.in;
 import com.g3.hotel_g3_back.booking.application.port.in.*;
 import com.g3.hotel_g3_back.booking.domain.Booking;
 import com.g3.hotel_g3_back.booking.domain.Room;
+import com.g3.hotel_g3_back.share.Pagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -55,10 +56,10 @@ public class BookingControllerAdapter {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<List<Room>> retriveAllRooms(@RequestParam int pageNumber,@RequestParam int pageSize,
+    public ResponseEntity<Pagination<Room>> retriveAllRooms(@RequestParam int pageNumber,@RequestParam int pageSize,
                                                       @RequestParam(required = false) List<String> types){
         log.info("Se recibio una solicitud para obtener habitaciones");
-        List<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, types);
+        Pagination<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, types);
         log.info("Respondiendo con las Habitaciones");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
