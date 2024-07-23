@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -30,23 +31,40 @@ public class RetriveRoomsUseCaseTest {
 
     @Test
     void execute_shouldReturnListOfRooms() {
-        Pagination<Room> rooms = new Pagination<>(Collections.singletonList(new Room()), 1) ;
-        when(retriveRoomsRepository.execute(1, 10, List.of())).thenReturn(rooms);
+        Room room = new Room();
+        room.setIdRoom(1);
+        room.setName("Habitación Estándar");
+        room.setPrice(100.0);
+        room.setNumberPeople(2);
+        room.setType("SIMPLE");
+        Pagination<Room> rooms = new Pagination<>(Collections.singletonList(room), 1);
 
-        Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
+        when(retriveRoomsRepository.execute(1, 10, List.of(), List.of())).thenReturn(rooms);
+
+        Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, List.of(), List.of());
 
         assertEquals(rooms, result);
-        verify(retriveRoomsRepository, times(1)).execute(1, 10, List.of());
+        verify(retriveRoomsRepository, times(1)).execute(1, 10, List.of(), List.of());
     }
 
     @Test
     void execute_withParameters_shouldReturnListOfRooms() {
-        Pagination<Room> rooms = new Pagination<>(Collections.singletonList(new Room()), 1) ;
-        when(retriveRoomsRepository.execute(1, 10, List.of())).thenReturn(rooms);
+        Room room = new Room();
+        room.setIdRoom(2);
+        room.setName("Habitación Deluxe");
+        room.setPrice(200.0);
+        room.setNumberPeople(2);
+        room.setType("DOBLE");
+        Pagination<Room> rooms = new Pagination<>(Collections.singletonList(room), 1);
 
-        Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
+        List<String> types = List.of("DOBLE");
+        List<Integer> serviceIds = List.of(1, 2);
+
+        when(retriveRoomsRepository.execute(1, 10, types, serviceIds)).thenReturn(rooms);
+
+        Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, types, serviceIds);
 
         assertEquals(rooms, result);
-        verify(retriveRoomsRepository, times(1)).execute(1, 10, List.of());
+        verify(retriveRoomsRepository, times(1)).execute(1, 10, types, serviceIds);
     }
 }
