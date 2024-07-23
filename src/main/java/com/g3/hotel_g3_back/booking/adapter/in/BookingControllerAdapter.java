@@ -23,16 +23,19 @@ public class BookingControllerAdapter {
     private final CreateBookingCommand createBookingCommand;
     private final UpdateBookingCommand updateBookingCommand;
     private final DeleteBookingCommand deleteBookingCommand;
-
+    private final RetriveRoomByIdQuery retriveRoomByIdQuery;
 
     public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery,
-                                    RetriveRoomsQuery retriveRoomsQuery, CreateBookingCommand createBookingCommand, UpdateBookingCommand updateBookingCommand, DeleteBookingCommand deleteBookingCommand) {
+                                    RetriveRoomsQuery retriveRoomsQuery, CreateBookingCommand createBookingCommand,
+                                    UpdateBookingCommand updateBookingCommand, DeleteBookingCommand deleteBookingCommand,
+                                    RetriveRoomByIdQuery retriveRoomByIdQuery) {
         this.retriveBookingQuery = retriveBookingQuery;
         this.retriveBookingByIdQuery = retriveBookingByIdQuery;
         this.retriveRoomsQuery = retriveRoomsQuery;
         this.createBookingCommand = createBookingCommand;
         this.updateBookingCommand = updateBookingCommand;
         this.deleteBookingCommand = deleteBookingCommand;
+        this.retriveRoomByIdQuery = retriveRoomByIdQuery;
     }
 
     @GetMapping()
@@ -60,6 +63,14 @@ public class BookingControllerAdapter {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/rooms/{idRoom}")
+    public ResponseEntity<Room> retrieveRoomById(@PathVariable Integer idRoom) {
+        log.info("Se recibió una solicitud para obtener la habitación con ID: " + idRoom);
+        Room response = retriveRoomByIdQuery.execute(idRoom);
+        log.info("Respondiendo con la habitación");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     @PostMapping()
     public ResponseEntity<Void> createBooking(@RequestBody Booking booking) {
         log.info("Se recibió una solicitud para crear una nueva reserva");
@@ -83,5 +94,4 @@ public class BookingControllerAdapter {
         log.info("Reserva eliminada lógicamente exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }

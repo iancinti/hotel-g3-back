@@ -1,10 +1,19 @@
 package com.g3.hotel_g3_back.booking.domain;
 
 public class Room {
+    private Integer idRoom;
     private String name;
     private Double price;
     private Integer numberPeople;
     private String type;
+
+    public Integer getIdRoom() {
+        return idRoom;
+    }
+
+    public void setIdRoom(Integer idRoom) {
+        this.idRoom = idRoom;
+    }
 
     public Integer getNumberPeople() {
         return numberPeople;
