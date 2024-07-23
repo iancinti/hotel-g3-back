@@ -9,7 +9,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("com.g3.hotel_g3_back.config")
 public class SpringJdbcConfig {
 
     @Bean
@@ -18,7 +17,7 @@ public class SpringJdbcConfig {
     }
 
     @Bean
-    public DataSource mysqlDataSource() {
+    public DataSource postgresDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("");

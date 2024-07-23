@@ -26,14 +26,14 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
 
         int offset = (pageNumber - 1) * pageSize;
         StringBuilder countSql = new StringBuilder(
-                "SELECT count(*) as cuenta FROM room r " +
+                "SELECT count(DISTINCT r.id_room) as cuenta FROM room r " +
                         "LEFT JOIN room_type rt ON r.id_room_type = rt.id_room_type " +
                         "INNER JOIN service_room_type srt ON rt.id_room_type = srt.id_room_type " +
                         "INNER JOIN service s ON srt.id_service = s.id " +
                         "WHERE 1=1"
         );
         StringBuilder sql = new StringBuilder(
-                "SELECT r.id_room, r.description, r.number_people, r.price, rt.name as room_type_name " +
+                "SELECT DISTINCT r.id_room, r.description, r.number_people, r.price, rt.name as room_type_name " +
                         "FROM room r LEFT JOIN room_type rt ON r.id_room_type = rt.id_room_type " +
                         "INNER JOIN service_room_type srt ON rt.id_room_type = srt.id_room_type " +
                         "INNER JOIN service s ON srt.id_service = s.id " +
