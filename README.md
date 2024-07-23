@@ -52,7 +52,15 @@ _Es necesario tener esto instalado antes de ejecutar el proyecto de manera local
 ![](https://github.com/iancinti/hotel-g3-back/blob/develop/diagrams/Entidad-Relaci%C3%B3n%20.drawio.png)
 
 ## Diagramas de clases por dominio
-[Attraction](https://github.com/iancinti/hotel-g3-back/blob/feature/readme-domain/src/main/java/com/g3/hotel_g3_back/attraction/README.md)
+[Dominio Attraction](https://github.com/iancinti/hotel-g3-back/blob/feature/readme-domain/src/main/java/com/g3/hotel_g3_back/attraction/README.md)
+
+[Dominio Booking](https://github.com/iancinti/hotel-g3-back/blob/feature/readme-domain/src/main/java/com/g3/hotel_g3_back/booking/README.md)
+
+[Dominio Customer](https://github.com/iancinti/hotel-g3-back/blob/feature/readme-domain/src/main/java/com/g3/hotel_g3_back/customer/README.md)
+
+[Dominio Gallery](https://github.com/iancinti/hotel-g3-back/blob/feature/readme-domain/src/main/java/com/g3/hotel_g3_back/gallery/README.md)
+
+[Dominio Service](https://github.com/iancinti/hotel-g3-back/blob/feature/readme-domain/src/main/java/com/g3/hotel_g3_back/service/README.md)
 
 ## Pruebas
 
