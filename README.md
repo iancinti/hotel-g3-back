@@ -47,10 +47,7 @@ _Es necesario tener esto instalado antes de ejecutar el proyecto de manera local
 * [PostgreSQL]Base de datos
 
 
-## Autores ✒️
+# Diagrama entidad-relacion
 
-* **Ian Cinti** - [iancinti]
-* **Jimena Belén Moraño** - [KatLawwliet]
-* **Pablo Ramirez** - [pabloandramirez]
 
----
+DrawIo: https://app.diagrams.net/#G1hMrB9lM3JXxUm_efYU7GlyzGAr-fBDCG#%7B%22pageId%22%3A%22imeR_ItJF6LQfeRHZOQm%22%7D
