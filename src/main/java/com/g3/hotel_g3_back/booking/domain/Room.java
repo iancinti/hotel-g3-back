@@ -57,4 +57,16 @@ public class Room {
     public void setServices(List<Integer> services) {
         this.services = services;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "idRoom=" + idRoom +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", numberPeople=" + numberPeople +
+                ", type='" + type + '\'' +
+                ", services=" + services +
+                '}';
+    }
 }

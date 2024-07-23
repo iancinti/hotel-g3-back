@@ -1,6 +1,7 @@
 package com.g3.hotel_g3_back.share;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Pagination<T> {
     private List<T> list;
@@ -28,5 +29,26 @@ public class Pagination<T> {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Pagination{" +
+                "list=" + list +
+                ", total=" + total +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pagination<?> that = (Pagination<?>) o;
+        return Objects.equals(list, that.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(list);
     }
 }

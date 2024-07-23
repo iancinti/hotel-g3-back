@@ -1,6 +1,7 @@
 package com.g3.hotel_g3_back.boocking.application.usecase;
 
 import com.g3.hotel_g3_back.booking.application.port.out.RetriveRoomsRepository;
+import com.g3.hotel_g3_back.booking.application.port.out.RetriveServicesByRoomIdRepository;
 import com.g3.hotel_g3_back.booking.application.usecase.RetriveRoomsUseCase;
 import com.g3.hotel_g3_back.booking.domain.Room;
 import com.g3.hotel_g3_back.share.Pagination;
@@ -19,6 +20,8 @@ import static org.mockito.Mockito.*;
 public class RetriveRoomsUseCaseTest {
 
     @Mock
+    private RetriveServicesByRoomIdRepository retriveServicesByRoomIdRepository;
+    @Mock
     private RetriveRoomsRepository retriveRoomsRepository;
 
     @InjectMocks
@@ -31,15 +34,19 @@ public class RetriveRoomsUseCaseTest {
 
     @Test
     void execute_shouldReturnListOfRooms() {
+        List<Integer> serviceId = List.of(1);
         Room room = new Room();
         room.setIdRoom(1);
         room.setName("Habitación Estándar");
         room.setPrice(100.0);
         room.setNumberPeople(2);
         room.setType("SIMPLE");
+        room.setServices(serviceId);
         Pagination<Room> rooms = new Pagination<>(Collections.singletonList(room), 1);
 
         when(retriveRoomsRepository.execute(1, 10, List.of(), List.of())).thenReturn(rooms);
+        when(retriveServicesByRoomIdRepository.execute(anyString())).thenReturn(serviceId);
+
 
         Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, List.of(), List.of());
 
@@ -49,18 +56,21 @@ public class RetriveRoomsUseCaseTest {
 
     @Test
     void execute_withParameters_shouldReturnListOfRooms() {
+        List<Integer> serviceId = List.of(1);
         Room room = new Room();
         room.setIdRoom(2);
         room.setName("Habitación Deluxe");
         room.setPrice(200.0);
         room.setNumberPeople(2);
         room.setType("DOBLE");
+        room.setServices(serviceId);
         Pagination<Room> rooms = new Pagination<>(Collections.singletonList(room), 1);
 
         List<String> types = List.of("DOBLE");
         List<Integer> serviceIds = List.of(1, 2);
 
         when(retriveRoomsRepository.execute(1, 10, types, serviceIds)).thenReturn(rooms);
+        when(retriveServicesByRoomIdRepository.execute(anyString())).thenReturn(serviceId);
 
         Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, types, serviceIds);
 
