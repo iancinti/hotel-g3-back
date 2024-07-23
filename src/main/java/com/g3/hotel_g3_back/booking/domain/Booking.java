@@ -17,6 +17,10 @@ public class Booking {
         this.checkOutDate = checkOutDate;
     }
 
+    public Booking() {
+
+    }
+
     public int getId() {
         return id;
     }
