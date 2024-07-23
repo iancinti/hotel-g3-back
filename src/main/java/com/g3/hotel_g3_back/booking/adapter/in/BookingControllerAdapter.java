@@ -3,6 +3,7 @@ package com.g3.hotel_g3_back.booking.adapter.in;
 import com.g3.hotel_g3_back.booking.application.port.in.*;
 import com.g3.hotel_g3_back.booking.domain.Booking;
 import com.g3.hotel_g3_back.booking.domain.Room;
+import com.g3.hotel_g3_back.share.Pagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,16 +24,19 @@ public class BookingControllerAdapter {
     private final CreateBookingCommand createBookingCommand;
     private final UpdateBookingCommand updateBookingCommand;
     private final DeleteBookingCommand deleteBookingCommand;
-
+    private final RetriveRoomByIdQuery retriveRoomByIdQuery;
 
     public BookingControllerAdapter(RetriveBookingQuery retriveBookingQuery, RetriveBookingByIdQuery retriveBookingByIdQuery,
-                                    RetriveRoomsQuery retriveRoomsQuery, CreateBookingCommand createBookingCommand, UpdateBookingCommand updateBookingCommand, DeleteBookingCommand deleteBookingCommand) {
+                                    RetriveRoomsQuery retriveRoomsQuery, CreateBookingCommand createBookingCommand,
+                                    UpdateBookingCommand updateBookingCommand, DeleteBookingCommand deleteBookingCommand,
+                                    RetriveRoomByIdQuery retriveRoomByIdQuery) {
         this.retriveBookingQuery = retriveBookingQuery;
         this.retriveBookingByIdQuery = retriveBookingByIdQuery;
         this.retriveRoomsQuery = retriveRoomsQuery;
         this.createBookingCommand = createBookingCommand;
         this.updateBookingCommand = updateBookingCommand;
         this.deleteBookingCommand = deleteBookingCommand;
+        this.retriveRoomByIdQuery = retriveRoomByIdQuery;
     }
 
     @GetMapping()
@@ -52,11 +56,19 @@ public class BookingControllerAdapter {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<List<Room>> retriveAllRooms(@RequestParam int pageNumber,@RequestParam int pageSize,
+    public ResponseEntity<Pagination<Room>> retriveAllRooms(@RequestParam int pageNumber,@RequestParam int pageSize,
                                                       @RequestParam(required = false) List<String> types){
         log.info("Se recibio una solicitud para obtener habitaciones");
-        List<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, types);
+        Pagination<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, types);
         log.info("Respondiendo con las Habitaciones");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/rooms/{idRoom}")
+    public ResponseEntity<Room> retrieveRoomById(@PathVariable Integer idRoom) {
+        log.info("Se recibió una solicitud para obtener la habitación con ID: " + idRoom);
+        Room response = retriveRoomByIdQuery.execute(idRoom);
+        log.info("Respondiendo con la habitación");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -83,5 +95,4 @@ public class BookingControllerAdapter {
         log.info("Reserva eliminada lógicamente exitosamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }

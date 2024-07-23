@@ -1,4 +1,4 @@
-package com.g3.hotel_g3_back.config;
+package com.g3.hotel_g3_back.share.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

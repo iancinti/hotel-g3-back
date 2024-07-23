@@ -3,6 +3,7 @@ package com.g3.hotel_g3_back.booking.adapter.in;
 import com.g3.hotel_g3_back.booking.application.port.in.*;
 import com.g3.hotel_g3_back.booking.domain.Booking;
 import com.g3.hotel_g3_back.booking.domain.Room;
+import com.g3.hotel_g3_back.share.Pagination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -71,10 +72,10 @@ public class BookingControllerAdapterTest {
 
     @Test
     void retriveAllRooms_shouldReturnListOfRooms() {
-        List<Room> rooms = Collections.singletonList(new Room());
+        Pagination<Room> rooms = new Pagination(Collections.singletonList(new Room()), 1);
         when(retriveRoomsQuery.execute(1, 10, List.of())).thenReturn(rooms);
 
-        ResponseEntity<List<Room>> response = bookingControllerAdapter.retriveAllRooms(1, 10, List.of());
+        ResponseEntity<Pagination<Room>> response = bookingControllerAdapter.retriveAllRooms(1, 10, List.of());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(rooms, response.getBody());

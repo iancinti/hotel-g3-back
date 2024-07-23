@@ -3,6 +3,7 @@ package com.g3.hotel_g3_back.boocking.application.usecase;
 import com.g3.hotel_g3_back.booking.application.port.out.RetriveRoomsRepository;
 import com.g3.hotel_g3_back.booking.application.usecase.RetriveRoomsUseCase;
 import com.g3.hotel_g3_back.booking.domain.Room;
+import com.g3.hotel_g3_back.share.Pagination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,10 +30,10 @@ public class RetriveRoomsUseCaseTest {
 
     @Test
     void execute_shouldReturnListOfRooms() {
-        List<Room> rooms = Collections.singletonList(new Room());
+        Pagination<Room> rooms = new Pagination<>(Collections.singletonList(new Room()), 1) ;
         when(retriveRoomsRepository.execute(1, 10, List.of())).thenReturn(rooms);
 
-        List<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
+        Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
 
         assertEquals(rooms, result);
         verify(retriveRoomsRepository, times(1)).execute(1, 10, List.of());
@@ -40,10 +41,10 @@ public class RetriveRoomsUseCaseTest {
 
     @Test
     void execute_withParameters_shouldReturnListOfRooms() {
-        List<Room> rooms = Collections.singletonList(new Room());
+        Pagination<Room> rooms = new Pagination<>(Collections.singletonList(new Room()), 1) ;
         when(retriveRoomsRepository.execute(1, 10, List.of())).thenReturn(rooms);
 
-        List<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
+        Pagination<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
 
         assertEquals(rooms, result);
         verify(retriveRoomsRepository, times(1)).execute(1, 10, List.of());
