@@ -56,10 +56,13 @@ public class BookingControllerAdapter {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<Pagination<Room>> retriveAllRooms(@RequestParam int pageNumber,@RequestParam int pageSize,
-                                                      @RequestParam(required = false) List<String> types){
+    public ResponseEntity<Pagination<Room>> retriveAllRooms(
+            @RequestParam int pageNumber,
+            @RequestParam int pageSize,
+            @RequestParam(required = false) List<String> types,
+            @RequestParam(required = false) List<Integer> serviceIds) {
         log.info("Se recibio una solicitud para obtener habitaciones");
-        Pagination<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, types);
+        Pagination<Room> response = retriveRoomsQuery.execute(pageNumber, pageSize, types, serviceIds);
         log.info("Respondiendo con las Habitaciones");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

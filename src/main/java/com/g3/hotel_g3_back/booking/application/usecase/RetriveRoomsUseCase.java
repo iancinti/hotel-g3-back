@@ -7,6 +7,7 @@ import com.g3.hotel_g3_back.share.Pagination;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 @Component
 public class RetriveRoomsUseCase implements RetriveRoomsQuery {
     private final RetriveRoomsRepository retriveRoomsRepository;
@@ -16,7 +17,7 @@ public class RetriveRoomsUseCase implements RetriveRoomsQuery {
     }
 
     @Override
-    public Pagination<Room> execute(int pageNumber, int pageSize, List<String> types) {
-        return retriveRoomsRepository.execute(pageNumber, pageSize, types);
+    public Pagination<Room> execute(int pageNumber, int pageSize, List<String> types, List<Integer> serviceIds) {
+        return retriveRoomsRepository.execute(pageNumber, pageSize, types, serviceIds);
     }
 }

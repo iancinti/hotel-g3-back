@@ -6,5 +6,5 @@ import com.g3.hotel_g3_back.share.Pagination;
 import java.util.List;
 
 public interface RetriveRoomsQuery {
-    Pagination<Room> execute(int pageNumber, int pageSize, List<String> types);
+    Pagination<Room> execute(int pageNumber, int pageSize, List<String> types, List<Integer> serviceIds);
 }

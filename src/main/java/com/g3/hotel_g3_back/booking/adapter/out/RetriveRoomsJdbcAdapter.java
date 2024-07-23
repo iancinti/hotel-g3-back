@@ -6,7 +6,6 @@ import com.g3.hotel_g3_back.share.Pagination;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,15 +20,24 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
     }
 
     @Override
-    public Pagination<Room> execute(int pageNumber, int pageSize, List<String> types) {
+    public Pagination<Room> execute(int pageNumber, int pageSize, List<String> types, List<Integer> services) {
         pageNumber = Math.max(1, pageNumber);
         pageSize = Math.max(1, pageSize);
 
         int offset = (pageNumber - 1) * pageSize;
-        StringBuilder countSql = new StringBuilder("select count(*) as cuenta FROM room r LEFT JOIN room_type rt ON r.id_room_type = rt.id_room_type WHERE 1=1");
+        StringBuilder countSql = new StringBuilder(
+                "SELECT count(*) as cuenta FROM room r " +
+                        "LEFT JOIN room_type rt ON r.id_room_type = rt.id_room_type " +
+                        "INNER JOIN service_room_type srt ON rt.id_room_type = srt.id_room_type " +
+                        "INNER JOIN service s ON srt.id_service = s.id " +
+                        "WHERE 1=1"
+        );
         StringBuilder sql = new StringBuilder(
                 "SELECT r.id_room, r.description, r.number_people, r.price, rt.name as room_type_name " +
-                        "FROM room r LEFT JOIN room_type rt ON r.id_room_type = rt.id_room_type WHERE 1=1"
+                        "FROM room r LEFT JOIN room_type rt ON r.id_room_type = rt.id_room_type " +
+                        "INNER JOIN service_room_type srt ON rt.id_room_type = srt.id_room_type " +
+                        "INNER JOIN service s ON srt.id_service = s.id " +
+                        "WHERE 1=1"
         );
 
         List<Object> params = new ArrayList<>();
@@ -45,6 +53,22 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
                     countSql.append(", ");
                 }
                 params.add(types.get(i).toUpperCase());
+            }
+            sql.append(")");
+            countSql.append(")");
+        }
+
+        if (services != null && !services.isEmpty()) {
+            sql.append(" AND s.id IN (");
+            countSql.append(" AND s.id IN (");
+            for (int i = 0; i < services.size(); i++) {
+                sql.append("?");
+                countSql.append("?");
+                if (i < services.size() - 1) {
+                    sql.append(", ");
+                    countSql.append(", ");
+                }
+                params.add(services.get(i));
             }
             sql.append(")");
             countSql.append(")");

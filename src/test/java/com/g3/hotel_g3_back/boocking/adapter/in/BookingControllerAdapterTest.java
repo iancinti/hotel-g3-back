@@ -69,17 +69,19 @@ public class BookingControllerAdapterTest {
         assertEquals(booking, response.getBody());
         verify(retriveBookingByIdQuery, times(1)).execute(1);
     }
-
     @Test
     void retriveAllRooms_shouldReturnListOfRooms() {
-        Pagination<Room> rooms = new Pagination(Collections.singletonList(new Room()), 1);
-        when(retriveRoomsQuery.execute(1, 10, List.of())).thenReturn(rooms);
+        Pagination<Room> rooms = new Pagination<>(Collections.singletonList(new Room()), 1);
+        List<String> types = List.of("Deluxe", "Standard");
+        List<Integer> serviceIds = List.of(1, 2, 3);
 
-        ResponseEntity<Pagination<Room>> response = bookingControllerAdapter.retriveAllRooms(1, 10, List.of());
+        when(retriveRoomsQuery.execute(1, 10, types, serviceIds)).thenReturn(rooms);
+
+        ResponseEntity<Pagination<Room>> response = bookingControllerAdapter.retriveAllRooms(1, 10, types, serviceIds);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(rooms, response.getBody());
-        verify(retriveRoomsQuery, times(1)).execute(1, 10, List.of());
+        verify(retriveRoomsQuery, times(1)).execute(1, 10, types, serviceIds);
     }
 
     @Test
