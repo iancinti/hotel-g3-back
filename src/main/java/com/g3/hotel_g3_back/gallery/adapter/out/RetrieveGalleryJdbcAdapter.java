@@ -23,16 +23,17 @@ public class RetrieveGalleryJdbcAdapter implements RetrieveGalleryRepository {
 
     @Override
     public List<Gallery> execute() {
-        String query = "SELECT id_room, id_attraction, url_image FROM image";
+        String query = "SELECT id_image, id_room, id_attraction, url_image FROM image";
         return jdbcTemplate.query(query, new RowMapper<Gallery>() {
             @Override
             public Gallery mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Integer idRoom = rs.getObject("id_room") != null ? rs.getInt("id_room") : null;
                 Integer idAttraction = rs.getObject("id_attraction") != null ? rs.getInt("id_attraction") : null;
                 String urlImage = rs.getString("url_image");
+                Integer idImage = rs.getInt("id_image");
 
                 return new Gallery(
-                        null,
+                        idImage,
                         idRoom,
                         idAttraction,
                         new ArrayList<>(Arrays.asList(urlImage))
