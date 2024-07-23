@@ -1,6 +1,5 @@
-package com.g3.hotel_g3_back.boocking.adapter.in;
+package com.g3.hotel_g3_back.booking.adapter.in;
 
-import com.g3.hotel_g3_back.booking.adapter.in.BookingControllerAdapter;
 import com.g3.hotel_g3_back.booking.application.port.in.*;
 import com.g3.hotel_g3_back.booking.domain.Booking;
 import com.g3.hotel_g3_back.booking.domain.Room;
@@ -15,12 +14,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-
 public class BookingControllerAdapterTest {
+
     @Mock
     private RetriveBookingQuery retriveBookingQuery;
 
@@ -74,13 +72,13 @@ public class BookingControllerAdapterTest {
     @Test
     void retriveAllRooms_shouldReturnListOfRooms() {
         List<Room> rooms = Collections.singletonList(new Room());
-        when(retriveRoomsQuery.execute(1, 10, null, null, null, null)).thenReturn(rooms);
+        when(retriveRoomsQuery.execute(1, 10, List.of())).thenReturn(rooms);
 
-        ResponseEntity<List<Room>> response = bookingControllerAdapter.retriveAllRooms(1, 10, null, null, null, null);
+        ResponseEntity<List<Room>> response = bookingControllerAdapter.retriveAllRooms(1, 10, List.of());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(rooms, response.getBody());
-        verify(retriveRoomsQuery, times(1)).execute(1, 10, null, null, null, null);
+        verify(retriveRoomsQuery, times(1)).execute(1, 10, List.of());
     }
 
     @Test

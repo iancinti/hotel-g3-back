@@ -30,22 +30,22 @@ public class RetriveRoomsUseCaseTest {
     @Test
     void execute_shouldReturnListOfRooms() {
         List<Room> rooms = Collections.singletonList(new Room());
-        when(retriveRoomsRepository.execute(1, 10, null, null, null, null)).thenReturn(rooms);
+        when(retriveRoomsRepository.execute(1, 10, List.of())).thenReturn(rooms);
 
-        List<Room> result = retriveRoomsUseCase.execute(1, 10, null, null, null, null);
+        List<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
 
         assertEquals(rooms, result);
-        verify(retriveRoomsRepository, times(1)).execute(1, 10, null, null, null, null);
+        verify(retriveRoomsRepository, times(1)).execute(1, 10, List.of());
     }
 
     @Test
     void execute_withParameters_shouldReturnListOfRooms() {
         List<Room> rooms = Collections.singletonList(new Room());
-        when(retriveRoomsRepository.execute(1, 10, 2, 100.0, 200.0, 1)).thenReturn(rooms);
+        when(retriveRoomsRepository.execute(1, 10, List.of())).thenReturn(rooms);
 
-        List<Room> result = retriveRoomsUseCase.execute(1, 10, 2, 100.0, 200.0, 1);
+        List<Room> result = retriveRoomsUseCase.execute(1, 10, List.of());
 
         assertEquals(rooms, result);
-        verify(retriveRoomsRepository, times(1)).execute(1, 10, 2, 100.0, 200.0, 1);
+        verify(retriveRoomsRepository, times(1)).execute(1, 10, List.of());
     }
 }
