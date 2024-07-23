@@ -49,5 +49,6 @@ _Es necesario tener esto instalado antes de ejecutar el proyecto de manera local
 
 # Diagrama entidad-relacion
 
+![](https://github.com/iancinti/hotel-g3-back/blob/develop/diagrams/Entidad-Relaci%C3%B3n%20.drawio.png)
 
 DrawIo: https://app.diagrams.net/#G1hMrB9lM3JXxUm_efYU7GlyzGAr-fBDCG#%7B%22pageId%22%3A%22imeR_ItJF6LQfeRHZOQm%22%7D
