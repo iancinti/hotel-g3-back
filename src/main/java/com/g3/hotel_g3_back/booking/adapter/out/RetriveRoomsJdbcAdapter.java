@@ -55,6 +55,7 @@ public class RetriveRoomsJdbcAdapter implements RetriveRoomsRepository {
     private static class RoomRowMapper implements RowMapper<Room> {
         public Room mapRow(ResultSet rs, int rowNum) throws SQLException {
             Room room = new Room();
+            room.setIdRoom(rs.getInt("id_room"));
             room.setName(rs.getString("description"));
             room.setNumberPeople(rs.getInt("number_people"));
             room.setPrice(rs.getDouble("price"));
