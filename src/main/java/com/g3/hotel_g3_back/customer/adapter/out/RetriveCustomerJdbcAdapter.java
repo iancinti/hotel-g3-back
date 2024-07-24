@@ -2,6 +2,9 @@ package com.g3.hotel_g3_back.customer.adapter.out;
 
 import com.g3.hotel_g3_back.customer.application.port.out.RetriveCustomerRepository;
 import com.g3.hotel_g3_back.customer.domain.Customer;
+import com.g3.hotel_g3_back.share.exception.GenericException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +17,7 @@ import java.util.List;
 @Component
 public class RetriveCustomerJdbcAdapter implements RetriveCustomerRepository {
 
+    private final Logger log = LoggerFactory.getLogger(RetriveCustomerJdbcAdapter.class);
     private final JdbcTemplate jdbcTemplate;
 
     private static final String SELECT_ALL_CUSTOMERS_SQL = "SELECT c.id_customer, c.id_personal_data, pd.first_name, pd.last_name, pd.email, pd.phone_number " +
@@ -29,8 +33,11 @@ public class RetriveCustomerJdbcAdapter implements RetriveCustomerRepository {
         try {
             return jdbcTemplate.query(SELECT_ALL_CUSTOMERS_SQL, new CustomerRowMapper());
         } catch (EmptyResultDataAccessException e) {
-            System.out.println("No se encontraron clientes.");
+            log.warn("No se encontraron clientes.");
             return List.of();
+        } catch (Exception e) {
+            log.error("Error al recuperar clientes.", e);
+            throw new GenericException("Error inesperado al recuperar clientes", e);
         }
     }
 
@@ -48,5 +55,6 @@ public class RetriveCustomerJdbcAdapter implements RetriveCustomerRepository {
         }
     }
 }
+
 
 

@@ -2,6 +2,9 @@ package com.g3.hotel_g3_back.customer.adapter.out;
 
 import com.g3.hotel_g3_back.customer.application.port.out.RetriveCustomerByIdRepository;
 import com.g3.hotel_g3_back.customer.domain.Customer;
+import com.g3.hotel_g3_back.share.exception.GenericException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,6 +16,7 @@ import java.sql.SQLException;
 @Component
 public class RetriveCustomerByIdJdbcAdapter implements RetriveCustomerByIdRepository {
 
+    private final Logger log = LoggerFactory.getLogger(RetriveCustomerByIdJdbcAdapter.class);
     private final JdbcTemplate jdbcTemplate;
 
     private static final String SELECT_CUSTOMER_BY_ID_SQL = "SELECT c.id_customer, c.id_personal_data, pd.first_name, pd.last_name, pd.email, pd.phone_number " +
@@ -29,8 +33,11 @@ public class RetriveCustomerByIdJdbcAdapter implements RetriveCustomerByIdReposi
         try {
             return jdbcTemplate.queryForObject(SELECT_CUSTOMER_BY_ID_SQL, new Object[]{idCustomer}, new CustomerRowMapper());
         } catch (EmptyResultDataAccessException e) {
-            System.out.println("No se encontró cliente con ID: " + idCustomer);
-            return null;
+            log.warn("No se encontró cliente con ID: {}", idCustomer);
+            throw new GenericException("Cliente no encontrado con ID: " + idCustomer, e);
+        } catch (Exception e) {
+            log.error("Error al recuperar cliente con ID: {}", idCustomer, e);
+            throw new GenericException("Error inesperado al recuperar cliente con ID: " + idCustomer, e);
         }
     }
 
@@ -48,5 +55,6 @@ public class RetriveCustomerByIdJdbcAdapter implements RetriveCustomerByIdReposi
         }
     }
 }
+
 
 
