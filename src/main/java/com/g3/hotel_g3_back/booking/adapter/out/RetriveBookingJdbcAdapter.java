@@ -35,13 +35,13 @@ public class RetriveBookingJdbcAdapter implements RetriveBookingRepository {
     private static class BookingRowMapper implements RowMapper<Booking> {
         @Override
         public Booking mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Booking(
-                    rs.getInt("id"),
-                    rs.getInt("id_customer"),
-                    rs.getInt("id_payment"),
-                    rs.getDate("check_in_date"),
-                    rs.getDate("check_out_date")
-            );
+            Booking booking = new Booking();
+            booking.setId(rs.getInt("id"));
+            booking.setIdCustomer(rs.getInt("id_customer"));
+            booking.setIdPayment(rs.getInt("id_payment"));
+            booking.setCheckInDate(rs.getDate("check_in_date"));
+            booking.setCheckInDate(rs.getDate("check_out_date"));
+            return booking;
         }
     }
 }
