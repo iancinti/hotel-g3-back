@@ -2,6 +2,7 @@ package com.g3.hotel_g3_back.attraction.adapter.out;
 
 import com.g3.hotel_g3_back.attraction.adapter.in.AttractionControllerAdapter;
 import com.g3.hotel_g3_back.attraction.application.port.out.DeleteAttractionRepository;
+import com.g3.hotel_g3_back.share.exception.GenericException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,8 @@ public class DeleteAttractionJdbcAdapter implements DeleteAttractionRepository {
             }
         } catch (DataAccessException e) {
             log.error("Error al marcar la atracción y sus imágenes como eliminadas: {}", e.getMessage());
-            throw e;
+            throw new GenericException("Error al acceder a la base de datos al intentar eliminar la atracción", e);
         }
     }
 }
+
