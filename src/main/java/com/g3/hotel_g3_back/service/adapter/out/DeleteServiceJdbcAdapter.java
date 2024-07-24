@@ -2,6 +2,7 @@ package com.g3.hotel_g3_back.service.adapter.out;
 
 import com.g3.hotel_g3_back.service.appliction.port.out.DeleteServiceRepository;
 import com.g3.hotel_g3_back.service.domain.Service;
+import com.g3.hotel_g3_back.share.exception.GenericException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,9 @@ public class DeleteServiceJdbcAdapter implements DeleteServiceRepository {
             }
         } catch (DataAccessException e) {
             log.error("Error al realizar soft delete del servicio con ID: {}: {}", id, e.getMessage());
-            throw e;
+            throw new GenericException("Error al realizar soft delete del servicio", e);
         }
     }
 }
+
 

@@ -2,6 +2,7 @@ package com.g3.hotel_g3_back.attraction.adapter.out;
 
 import com.g3.hotel_g3_back.attraction.application.port.out.CreateAttractionRepository;
 import com.g3.hotel_g3_back.attraction.domain.Attraction;
+import com.g3.hotel_g3_back.share.exception.GenericException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,10 @@ public class CreateAttractionJdbcAdapter implements CreateAttractionRepository {
         } catch (DataAccessException e) {
             log.error("Error al crear atracción: {}", e.getMessage());
             log.error("Error al crear atracción: {}", e.getCause().getMessage());
+            throw new GenericException("Error en la base de datos al crear la atracción", e);
+        } catch (Exception e) {
+            log.error("Error inesperado al crear la atracción", e);
+            throw new GenericException("Error inesperado al crear la atracción", e);
         }
     }
 }

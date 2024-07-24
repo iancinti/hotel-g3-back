@@ -2,6 +2,9 @@ package com.g3.hotel_g3_back.customer.adapter.out;
 
 import com.g3.hotel_g3_back.customer.application.port.out.CreateCustomerRepository;
 import com.g3.hotel_g3_back.customer.domain.Customer;
+import com.g3.hotel_g3_back.share.exception.GenericException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -11,6 +14,7 @@ import java.sql.PreparedStatement;
 @Component
 public class CreateCustomerJdbcAdapter implements CreateCustomerRepository {
 
+    private final Logger log = LoggerFactory.getLogger(CreateCustomerJdbcAdapter.class);
     private final JdbcTemplate jdbcTemplate;
 
     private static final String INSERT_PERSONAL_DATA_SQL = "INSERT INTO Personal_data (id_personal_data, first_name, last_name, email, phone_number) VALUES (?, ?, ?, ?, ?)";
@@ -47,13 +51,14 @@ public class CreateCustomerJdbcAdapter implements CreateCustomerRepository {
                     personalDataId
             );
 
-            System.out.println("Cliente creado exitosamente con ID Personal_data=" + personalDataId);
+            log.info("Cliente creado exitosamente con ID Personal_data={}", personalDataId);
         } catch (DataAccessException e) {
-            System.out.println("Error al crear cliente: " + e.getMessage());
-            e.printStackTrace();
+            log.error("Error al crear cliente: {}", e.getMessage());
+            throw new GenericException("Error al acceder a la base de datos al crear el cliente", e);
         } catch (RuntimeException e) {
-            System.out.println("Error inesperado: " + e.getMessage());
-            e.printStackTrace();
+            log.error("Error inesperado: {}", e.getMessage());
+            throw new GenericException("Error inesperado al crear el cliente", e);
         }
     }
 }
+

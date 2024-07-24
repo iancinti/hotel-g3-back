@@ -2,6 +2,7 @@ package com.g3.hotel_g3_back.service.adapter.out;
 
 import com.g3.hotel_g3_back.service.appliction.port.out.RetiveServiceQueryRepository;
 import com.g3.hotel_g3_back.service.domain.Service;
+import com.g3.hotel_g3_back.share.exception.GenericException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,8 +28,7 @@ public class RetriveServiceJdbcAdapter implements RetiveServiceQueryRepository {
         try {
             return jdbcTemplate.query(SELECT_ALL_SERVICES_SQL, new ServiceRowMapper());
         } catch (DataAccessException e) {
-            System.out.println("Error al recuperar los servicios: " + e.getMessage());
-            return null;
+            throw new GenericException("Error al recuperar los servicios", e);
         }
     }
 
@@ -44,3 +44,4 @@ public class RetriveServiceJdbcAdapter implements RetiveServiceQueryRepository {
         }
     }
 }
+

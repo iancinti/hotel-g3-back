@@ -2,6 +2,9 @@ package com.g3.hotel_g3_back.customer.adapter.out;
 
 import com.g3.hotel_g3_back.customer.application.port.out.UpdateCustomerRepository;
 import com.g3.hotel_g3_back.customer.domain.Customer;
+import com.g3.hotel_g3_back.share.exception.GenericException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -16,6 +19,7 @@ import javax.sql.DataSource;
 @Component
 public class UpdateCustomerJdbcAdapter implements UpdateCustomerRepository {
 
+    private final Logger log = LoggerFactory.getLogger(UpdateCustomerJdbcAdapter.class);
     private final JdbcTemplate jdbcTemplate;
     private final PlatformTransactionManager transactionManager;
 
@@ -50,11 +54,13 @@ public class UpdateCustomerJdbcAdapter implements UpdateCustomerRepository {
             );
 
             transactionManager.commit(status);
-            System.out.println("Cliente y datos personales actualizados exitosamente: ID Cliente=" + idCustomer);
+            log.info("Cliente y datos personales actualizados exitosamente: ID Cliente={}", idCustomer);
         } catch (DataAccessException e) {
             transactionManager.rollback(status);
-            System.out.println("Error al actualizar cliente: " + e.getMessage());
+            log.error("Error al actualizar cliente: {}", e.getMessage());
+            throw new GenericException("Error inesperado al actualizar el cliente", e);
         }
     }
 }
+
 

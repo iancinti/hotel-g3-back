@@ -1,8 +1,8 @@
 package com.g3.hotel_g3_back.attraction.adapter.out;
 
-import com.g3.hotel_g3_back.attraction.adapter.in.AttractionControllerAdapter;
 import com.g3.hotel_g3_back.attraction.application.port.out.UpdateAttractionRepository;
 import com.g3.hotel_g3_back.attraction.domain.Attraction;
+import com.g3.hotel_g3_back.share.exception.GenericException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateAttractionJdbcAdapter implements UpdateAttractionRepository {
 
-    private final Logger log = LoggerFactory.getLogger(AttractionControllerAdapter.class);
+    private final Logger log = LoggerFactory.getLogger(UpdateAttractionJdbcAdapter.class);
     private final JdbcTemplate jdbcTemplate;
 
     private static final String UPDATE_ATTRACTION_SQL = "UPDATE attraction SET name = ?, description = ? WHERE id_attraction = ?";
@@ -39,7 +39,8 @@ public class UpdateAttractionJdbcAdapter implements UpdateAttractionRepository {
             }
         } catch (DataAccessException e) {
             log.error("Error al actualizar la atracción: {}", e.getMessage());
-            throw e;
+            throw new GenericException("Error al acceder a la base de datos al intentar actualizar la atracción", e);
         }
     }
 }
+
