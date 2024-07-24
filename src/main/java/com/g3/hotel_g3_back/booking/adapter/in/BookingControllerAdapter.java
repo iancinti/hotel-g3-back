@@ -77,7 +77,7 @@ public class BookingControllerAdapter {
 
     @PostMapping()
     public ResponseEntity<Void> createBooking(@RequestBody Booking booking) {
-        log.info("Se recibió una solicitud para crear una nueva reserva");
+        log.info("Se recibió una solicitud para crear una nueva reserva: {}", booking);
         createBookingCommand.execute(booking);
         log.info("Reserva creada exitosamente");
         return ResponseEntity.status(HttpStatus.CREATED).build();

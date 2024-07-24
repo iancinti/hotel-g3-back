@@ -8,17 +8,19 @@ public class Booking {
     private int idPayment;
     private Date checkInDate;
     private Date checkOutDate;
-
-    public Booking(int id, int idCustomer, int idPayment, Date checkInDate, Date checkOutDate) {
-        this.id = id;
-        this.idCustomer = idCustomer;
-        this.idPayment = idPayment;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-    }
+    private Double totalAmount;
 
     public Booking() {
 
+    }
+
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public int getId() {
@@ -59,5 +61,17 @@ public class Booking {
 
     public void setCheckOutDate(Date checkOutDate) {
         this.checkOutDate = checkOutDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", idCustomer=" + idCustomer +
+                ", idPayment=" + idPayment +
+                ", checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                ", totalAmount=" + totalAmount +
+                '}';
     }
 }
